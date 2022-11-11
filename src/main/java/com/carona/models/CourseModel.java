@@ -3,27 +3,27 @@ package com.carona.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Course {
+public enum CourseModel {
     ComputerEngineering(0),
     FoodEngineering(1),
     BusinessAdministration(2),
     ControlAndAutomationEngineering(3);
 
     private Integer value;
-    private static Map<Integer, Course> map = new HashMap<Integer, Course>();
+    private static Map<Integer, CourseModel> map = new HashMap<Integer, CourseModel>();
 
-    Course(Integer value) {
+    CourseModel(Integer value) {
         this.value = value;
     }
 
     static {
-        for (Course course : Course.values()) {
+        for (CourseModel course : CourseModel.values()) {
             map.put(course.value, course);
         }
     }
 
-    public static Course fromInteger(Integer value) {
-        return (Course) map.get(value);
+    public static CourseModel fromInteger(Integer value) {
+        return (CourseModel) map.get(value);
     }
 
     public Integer getValue() {

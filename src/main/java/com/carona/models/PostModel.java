@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-public class Post extends AbstractModel<Integer> {
+public class PostModel extends AbstractModel<Integer> {
 
-    public Post() {
+    public PostModel() {
     }
 
-    public Post(String title, String description, Location placeOfDeparture, Location destination,
+    public PostModel(String title, String description, LocationModel placeOfDeparture, LocationModel destination,
             Integer availableSeats, LocalDateTime departureTime) {
         this.title = title;
         this.description = description;
@@ -21,8 +21,8 @@ public class Post extends AbstractModel<Integer> {
 
     private String title;
     private String description;
-    private Location placeOfDeparture;
-    private Location destination;
+    private LocationModel placeOfDeparture;
+    private LocationModel destination;
     private final List<Boolean> availableWeekdays = Arrays.asList(false, false, false, false, false, false, false);
     private Integer availableSeats;
     private LocalDateTime departureTime;
@@ -43,19 +43,19 @@ public class Post extends AbstractModel<Integer> {
         this.description = description;
     }
 
-    public Location getPlaceOfDeparture() {
+    public LocationModel getPlaceOfDeparture() {
         return placeOfDeparture;
     }
 
-    public void setPlaceOfDeparture(Location placeOfDeparture) {
+    public void setPlaceOfDeparture(LocationModel placeOfDeparture) {
         this.placeOfDeparture = placeOfDeparture;
     }
 
-    public Location getDestination() {
+    public LocationModel getDestination() {
         return destination;
     }
 
-    public void setDestination(Location destination) {
+    public void setDestination(LocationModel destination) {
         this.destination = destination;
     }
 

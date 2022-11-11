@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import com.carona.App;
-import com.carona.models.User;
+import com.carona.models.UserModel;
 import com.carona.services.UserService;
 
 import javafx.fxml.FXML;
@@ -33,11 +33,11 @@ public class EditUserController {
     @FXML
     Button btnDelete;
 
-    User user = App.getUser();
+    UserModel user = App.getUser();
 
     @FXML
     public void initialize() {
-        User user = App.getUser();
+        UserModel user = App.getUser();
         txtName.setText(user.getName());
         txtPhoneNumber.setText(user.getPhoneNumber());
         txtDescription.setText(user.getDescription());

@@ -7,10 +7,11 @@ import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
 import com.carona.exceptions.InvalidPasswordComplexityException;
 import com.carona.helpers.AuthHelper;
-import com.carona.models.User;
+import com.carona.models.UserModel;
 
 public class UserService {
-    public void register(User user) throws Exception, EntityAlreadyExistsException, InvalidPasswordComplexityException {
+    public void register(UserModel user)
+            throws Exception, EntityAlreadyExistsException, InvalidPasswordComplexityException {
         UserDAO userDAO = new UserDAO();
 
         Boolean userExists = userDAO.readById(user) != null;
@@ -31,12 +32,12 @@ public class UserService {
         userDAO.insert(user);
     }
 
-    public User getUserById(String id) throws Exception, SQLException {
+    public UserModel getUserById(String id) throws Exception, SQLException {
         UserDAO userDAO = new UserDAO();
-        User searchUser = new User();
+        UserModel searchUser = new UserModel();
         searchUser.setId(id);
 
-        User userFound = userDAO.readById(searchUser);
+        UserModel userFound = userDAO.readById(searchUser);
 
         assertUserExistence(userFound);
 
@@ -44,7 +45,7 @@ public class UserService {
         return userFound;
     }
 
-    public void editUser(User user) throws Exception {
+    public void editUser(UserModel user) throws Exception {
         UserDAO userDAO = new UserDAO();
 
         assertUserExistence(user);
@@ -52,7 +53,7 @@ public class UserService {
         userDAO.update(user);
     }
 
-    public void editPassword(User user) throws Exception {
+    public void editPassword(UserModel user) throws Exception {
         UserDAO userDAO = new UserDAO();
 
         assertUserExistence(user);
@@ -63,12 +64,12 @@ public class UserService {
         userDAO.updatePassword(user);
     }
 
-    public void remove(User user) throws Exception {
+    public void remove(UserModel user) throws Exception {
         UserDAO userDAO = new UserDAO();
         userDAO.remove(user);
     }
 
-    public void assertUserExistence(User user) throws SQLException, EntityDoesNotExistException {
+    public void assertUserExistence(UserModel user) throws SQLException, EntityDoesNotExistException {
         UserDAO userDAO = new UserDAO();
 
         Boolean userDoesNotExist = userDAO.readById(user) == null;

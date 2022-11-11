@@ -4,9 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.carona.models.Post;
+import com.carona.models.PostModel;
 
-public class PostDAO extends BaseDAO<Post>{
+public class PostDAO extends BaseDAO<PostModel> {
 
     @Override
     protected String getTableName() {
@@ -34,7 +34,7 @@ public class PostDAO extends BaseDAO<Post>{
     }
 
     @Override
-    protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, Post model) throws SQLException {
+    protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, PostModel model) throws SQLException {
         ps.setInt(1, model.getId());
         ps.setString(2, model.getTitle());
         ps.setString(3, model.getDescription());
@@ -45,27 +45,27 @@ public class PostDAO extends BaseDAO<Post>{
     }
 
     @Override
-    protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, Post model) throws SQLException {
+    protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, PostModel model) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    protected PreparedStatement prepareStatementForRemove(PreparedStatement ps, Post model) throws SQLException {
+    protected PreparedStatement prepareStatementForRemove(PreparedStatement ps, PostModel model) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    protected PreparedStatement prepareStatementForRead(PreparedStatement ps, Post model) throws SQLException {
+    protected PreparedStatement prepareStatementForRead(PreparedStatement ps, PostModel model) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    protected Post convertToModel(ResultSet rs) throws SQLException {
+    protected PostModel convertToModel(ResultSet rs) throws SQLException {
         // TODO Auto-generated method stub
         return null;
     }
-    
+
 }

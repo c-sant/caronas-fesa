@@ -1,11 +1,11 @@
 package com.carona.models;
 
-public class Location extends AbstractModel<Integer> {
+public class LocationModel extends AbstractModel<Integer> {
 
-    public Location() {
+    public LocationModel() {
     }
 
-    public Location(Integer id, Double latitude, Double longitude) {
+    public LocationModel(Integer id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;

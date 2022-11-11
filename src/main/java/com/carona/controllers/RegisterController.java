@@ -7,8 +7,8 @@ import com.carona.exceptions.InvalidFormatPhoneNumberException;
 import com.carona.exceptions.InvalidFormatStudentIdException;
 import com.carona.exceptions.InvalidPasswordComplexityException;
 import com.carona.exceptions.PasswordNotMatchException;
-import com.carona.models.Course;
-import com.carona.models.User;
+import com.carona.models.CourseModel;
+import com.carona.models.UserModel;
 import com.carona.services.UserService;
 
 import java.io.IOException;
@@ -94,11 +94,11 @@ public class RegisterController {
 
         UserService userService = new UserService();
 
-        User user = new User(
+        UserModel user = new UserModel(
                 txtStudentId.getText(),
                 txtName.getText(),
                 txtDescription.getText(),
-                Course.fromInteger(courseStrInt.get(cboCourse.getValue())),
+                CourseModel.fromInteger(courseStrInt.get(cboCourse.getValue())),
                 txtPhoneNumber.getText(),
                 txtPassword.getText());
 

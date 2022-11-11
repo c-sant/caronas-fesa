@@ -1,11 +1,11 @@
 package com.carona.models;
 
-public class User extends AbstractModel<String> {
+public class UserModel extends AbstractModel<String> {
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(String id, String name, String description, Course course, String phoneNumber,
+    public UserModel(String id, String name, String description, CourseModel course, String phoneNumber,
             String password) {
         this.id = id;
         this.name = name;
@@ -17,7 +17,7 @@ public class User extends AbstractModel<String> {
 
     private String name;
     private String description;
-    private Course course;
+    private CourseModel course;
     private String phoneNumber;
     private String password;
 
@@ -37,11 +37,11 @@ public class User extends AbstractModel<String> {
         this.description = description;
     }
 
-    public Course getCourse() {
+    public CourseModel getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(CourseModel course) {
         this.course = course;
     }
 

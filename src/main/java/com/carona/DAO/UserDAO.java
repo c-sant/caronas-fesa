@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.carona.models.Course;
-import com.carona.models.User;
+import com.carona.models.CourseModel;
+import com.carona.models.UserModel;
 
-public class UserDAO extends BaseDAO<User> {
+public class UserDAO extends BaseDAO<UserModel> {
 
     private static final String UPDATE_PASSWORD_SQL = "UPDATE [User] SET password = ? WHERE id = ?";
 
@@ -25,11 +25,11 @@ public class UserDAO extends BaseDAO<User> {
     @Override
     protected String getUpdateSql() {
         return "UPDATE [" + getTableName() + "] SET " +
-        "name = ? , " +
-        "description = ? , " +
-        "course = ? , " +
-        "phone_number = ? " +
-        "WHERE id = ? ";
+                "name = ? , " +
+                "description = ? , " +
+                "course = ? , " +
+                "phone_number = ? " +
+                "WHERE id = ? ";
     }
 
     @Override
@@ -42,9 +42,8 @@ public class UserDAO extends BaseDAO<User> {
         return "SELECT * FROM [" + getTableName() + "] WHERE id = ?";
     }
 
-    
     @Override
-    protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, User model) throws SQLException {
+    protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, UserModel model) throws SQLException {
         ps.setString(1, model.getId());
         ps.setString(2, model.getName());
         ps.setString(3, model.getDescription());
@@ -56,7 +55,7 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, User model) throws SQLException {
+    protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, UserModel model) throws SQLException {
         ps.setString(1, model.getName());
         ps.setString(2, model.getDescription());
         ps.setInt(3, model.getCourse().getValue());
@@ -67,32 +66,31 @@ public class UserDAO extends BaseDAO<User> {
     }
 
     @Override
-    protected PreparedStatement prepareStatementForRemove(PreparedStatement ps, User model) throws SQLException {
+    protected PreparedStatement prepareStatementForRemove(PreparedStatement ps, UserModel model) throws SQLException {
         ps.setString(1, model.getId());
 
         return ps;
     }
 
     @Override
-    protected PreparedStatement prepareStatementForRead(PreparedStatement ps, User model) throws SQLException {
+    protected PreparedStatement prepareStatementForRead(PreparedStatement ps, UserModel model) throws SQLException {
         ps.setString(1, model.getId());
 
         return ps;
     }
 
     @Override
-    protected User convertToModel(ResultSet rs) throws SQLException {
-        return new User(
-            rs.getString("Id"),
-            rs.getString("name"),
-            rs.getString("description"),
-            Course.fromInteger(rs.getInt("course")),
-            rs.getString("phone_number"),
-            rs.getString("password")
-            );
+    protected UserModel convertToModel(ResultSet rs) throws SQLException {
+        return new UserModel(
+                rs.getString("Id"),
+                rs.getString("name"),
+                rs.getString("description"),
+                CourseModel.fromInteger(rs.getInt("course")),
+                rs.getString("phone_number"),
+                rs.getString("password"));
     }
 
-    public void updatePassword(User e) throws SQLException {
+    public void updatePassword(UserModel e) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
 
@@ -116,6 +114,5 @@ public class UserDAO extends BaseDAO<User> {
             }
         }
     }
-
 
 }

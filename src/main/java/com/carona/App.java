@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import com.carona.models.User;
+import com.carona.models.UserModel;
 
 /**
  * JavaFX App
@@ -15,18 +15,18 @@ import com.carona.models.User;
 public class App extends Application {
 
     private static Scene scene;
-    private static User user;
+    private static UserModel user;
 
-    public static User getUser(){
+    public static UserModel getUser() {
         return user;
     }
 
-    public static void setUser(User userParameter){
+    public static void setUser(UserModel userParameter) {
         user = userParameter;
     }
 
     @Override
-    public void start(Stage stage) throws IOException{
+    public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("loginScreen"), 300, 500);
         stage.setResizable(false);
         stage.setScene(scene);
@@ -38,7 +38,7 @@ public class App extends Application {
     }
 
     public static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource( "screens/"+ fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("screens/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

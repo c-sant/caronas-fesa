@@ -5,16 +5,16 @@ import java.sql.SQLException;
 
 import com.carona.DAO.UserDAO;
 import com.carona.helpers.AuthHelper;
-import com.carona.models.User;
+import com.carona.models.UserModel;
 
 public class AuthService {
-    public User login(String ra, String password) throws Exception, IOException, SQLException {
+    public UserModel login(String ra, String password) throws Exception, IOException, SQLException {
         UserDAO userDAO = new UserDAO();
 
-        User userWithRA = new User();
+        UserModel userWithRA = new UserModel();
         userWithRA.setId(ra);
 
-        User user = userDAO.readById(userWithRA);
+        UserModel user = userDAO.readById(userWithRA);
         if (user == null) {
             return null;
         }

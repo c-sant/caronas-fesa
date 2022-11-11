@@ -1,7 +1,7 @@
 package com.carona.controllers;
 
 import com.carona.App;
-import com.carona.models.User;
+import com.carona.models.UserModel;
 import com.carona.services.AuthService;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class LoginController {
         String ra = txtName.getText();
         String password = txtPassword.getText();
 
-        User user = authService.login(ra, password);
+        UserModel user = authService.login(ra, password);
 
         if (user != null) {
             App.setUser(user);
