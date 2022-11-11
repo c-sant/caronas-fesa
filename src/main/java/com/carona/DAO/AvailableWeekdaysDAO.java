@@ -77,7 +77,7 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
             throws SQLException {
         ps.setInt(1, model.getId());
 
-        return null;
+        return ps;
     }
 
     @Override
