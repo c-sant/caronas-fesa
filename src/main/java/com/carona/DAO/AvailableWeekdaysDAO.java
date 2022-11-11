@@ -15,13 +15,12 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
 
     @Override
     protected String getInsertSql() {
-        return "INSERT INTO [" + getTableName() + "] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO [" + getTableName() + "] VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String getUpdateSql() {
         return "UPDATE [" + getTableName() + "] SET " +
-                "post_id = ? , " +
                 "sunday = ? , " +
                 "monday = ? , " +
                 "tuesday = ? , " +
@@ -36,7 +35,6 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
     protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, AvailableWeekdaysModel model)
             throws SQLException {
         ps.setInt(1, model.getId());
-        ps.setInt(2, model.getPostId());
         ps.setBoolean(3, model.getSunday());
         ps.setBoolean(4, model.getMonday());
         ps.setBoolean(5, model.getTuesday());
@@ -51,7 +49,6 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
     @Override
     protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, AvailableWeekdaysModel model)
             throws SQLException {
-        ps.setInt(1, model.getPostId());
         ps.setBoolean(2, model.getSunday());
         ps.setBoolean(3, model.getMonday());
         ps.setBoolean(4, model.getTuesday());
@@ -84,7 +81,6 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
     protected AvailableWeekdaysModel convertToModel(ResultSet rs) throws SQLException {
         return new AvailableWeekdaysModel(
                 rs.getInt("Id"),
-                rs.getInt("postId"),
                 rs.getBoolean("sunday"),
                 rs.getBoolean("monday"),
                 rs.getBoolean("tuesday"),

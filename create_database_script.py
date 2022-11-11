@@ -32,24 +32,24 @@ try:
             [description] TEXT,
             [place_of_departure] INTEGER,
             [destination] INTEGER,
-            available_seats INTEGER,
-            departure_time TEXT,
+            [available_weekdays] INTEGER,
+            [available_seats] INTEGER,
+            [departure_time] TEXT,
             FOREIGN KEY([place_of_departure]) REFERENCES [Location](id),
-            FOREIGN KEY([destination]) REFERENCES [Location](id)
+            FOREIGN KEY([destination]) REFERENCES [Location](id),
+            FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id)
         );
 
         DROP TABLE IF EXISTS [AvailableWeekdays];
         CREATE TABLE IF NOT EXISTS [AvailableWeekdays] (
             [id] INTEGER PRIMARY KEY,
-            [post_id] INTEGER,
             [sunday] BOOLEAN,
             [monday] BOOLEAN,
             [tuesday] BOOLEAN, 
             [wednesday] BOOLEAN, 
             [thursday] BOOLEAN, 
             [friday] BOOLEAN, 
-            [saturday] BOOLEAN,
-            FOREIGN KEY([post_id]) REFERENCES [Post](id) 
+            [saturday] BOOLEAN
         )
         """
     )

@@ -5,10 +5,9 @@ public class AvailableWeekdaysModel extends AbstractModel<Integer> {
     public AvailableWeekdaysModel() {
     }
 
-    public AvailableWeekdaysModel(Integer id, Integer postId, Boolean sunday, Boolean monday, Boolean tuesday,
+    public AvailableWeekdaysModel(Integer id, Boolean sunday, Boolean monday, Boolean tuesday,
             Boolean wednesday, Boolean thursday, Boolean friday, Boolean saturday) {
         this.id = id;
-        this.postId = postId;
         this.sunday = sunday;
         this.monday = monday;
         this.tuesday = tuesday;
@@ -18,7 +17,6 @@ public class AvailableWeekdaysModel extends AbstractModel<Integer> {
         this.saturday = saturday;
     }
 
-    private Integer postId;
     private Boolean sunday;
     private Boolean monday;
     private Boolean tuesday;
@@ -26,14 +24,6 @@ public class AvailableWeekdaysModel extends AbstractModel<Integer> {
     private Boolean thursday;
     private Boolean friday;
     private Boolean saturday;
-
-    public Integer getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
 
     public Boolean getSunday() {
         return sunday;
