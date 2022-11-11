@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.carona.models.CourseModel;
+import com.carona.models.Course;
 import com.carona.models.UserModel;
 
 public class UserDAO extends BaseDAO<UserModel> {
@@ -75,7 +75,7 @@ public class UserDAO extends BaseDAO<UserModel> {
                 rs.getString("Id"),
                 rs.getString("name"),
                 rs.getString("description"),
-                CourseModel.fromInteger(rs.getInt("course")),
+                Course.fromInteger(rs.getInt("course")),
                 rs.getString("phone_number"),
                 rs.getString("password"));
     }

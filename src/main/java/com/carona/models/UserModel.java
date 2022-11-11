@@ -5,7 +5,7 @@ public class UserModel extends AbstractModel<String> {
     public UserModel() {
     }
 
-    public UserModel(String id, String name, String description, CourseModel course, String phoneNumber,
+    public UserModel(String id, String name, String description, Course course, String phoneNumber,
             String password) {
         this.id = id;
         this.name = name;
@@ -17,7 +17,7 @@ public class UserModel extends AbstractModel<String> {
 
     private String name;
     private String description;
-    private CourseModel course;
+    private Course course;
     private String phoneNumber;
     private String password;
 
@@ -37,11 +37,11 @@ public class UserModel extends AbstractModel<String> {
         this.description = description;
     }
 
-    public CourseModel getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(CourseModel course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
