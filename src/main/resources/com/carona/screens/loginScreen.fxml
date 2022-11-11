@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carona.controllers.LoginController">
+   <children>
+      <Pane onKeyPressed="#onKeyPressed" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: #aab0e7;">
+         <children>
+            <Text fill="#f8f8f8" layoutX="115.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="txtName" layoutX="46.0" layoutY="179.0" prefHeight="25.0" prefWidth="197.0" promptText="RA" style="-fx-background-radius: 10; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white; -fx-text-fill: white;" />
+            <PasswordField fx:id="txtPassword" layoutX="46.0" layoutY="225.0" prefHeight="25.0" prefWidth="197.0" promptText="Senha" style="-fx-background-radius: 10; -fx-prompt-text-fill: white; -fx-background-color: #2e50c4; -fx-text-fill: white;" />
+            <Button fx:id="btnLogin" layoutX="163.0" layoutY="264.0" mnemonicParsing="false" onAction="#onLogin" style="-fx-background-color: #0d3ab0; -fx-text-fill: white;" text="Login" />
+            <Button fx:id="btnRegister" layoutX="75.0" layoutY="264.0" mnemonicParsing="false" onAction="#onRegister" style="-fx-background-color: #4f66d8; -fx-text-fill: white;" text="Cadastre-se" />
+            <ImageView fitHeight="194.0" fitWidth="221.0" layoutX="38.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/logo-carona-test.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
+   </children>
+</Pane>

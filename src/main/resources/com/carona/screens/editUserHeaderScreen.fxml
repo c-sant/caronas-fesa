@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="paneHeader" prefHeight="50.0" prefWidth="247.0" style="-fx-background-color: #aab0e7; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#f8f8f8" layoutX="24.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Configuração do Usuário">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Text>
+   </children>
+</Pane>

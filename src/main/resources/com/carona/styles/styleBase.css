@@ -1,0 +1,38 @@
+.combo-box{
+    -fx-background-radius: 10;
+    -fx-background-color:  #2e50c4;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 0, 0, 0.5) ;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color:  #2e50c4;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color:  rgba(46, 80, 196, 0.5);
+}
+.combo-box-base .text{
+    -fx-fill: white;
+}
+
+.text-field, .text-area{
+    -fx-background-radius: 10;
+    -fx-background-color:  #2e50c4;
+    -fx-prompt-text-fill: white;
+    -fx-text-fill: white;
+}
+
+.text-area .content{
+    -fx-background-color:  #2e50c4;
+}
+
+#Register{
+    -fx-background-color:  #4f66d8;
+    -fx-text-fill:  white;
+}
+
+#cancelExclude{
+    -fx-background-color:  rgba(46, 80, 196, 0.5);
+    -fx-text-fill:  white;
+}
