@@ -28,7 +28,7 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
                 "wednesday = ? , " +
                 "thursday = ? , " +
                 "friday = ? , " +
-                "saturday = ? , " +
+                "saturday = ? " +
                 "WHERE id = ?";
     }
 
