@@ -24,16 +24,6 @@ public class PostDAO extends BaseDAO<PostModel> {
     }
 
     @Override
-    protected String getDeleteSql() {
-        return "DELETE FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
-    protected String getSelectSql() {
-        return "SELECT * FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
     protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, PostModel model) throws SQLException {
         ps.setInt(1, model.getId());
         ps.setString(2, model.getTitle());

@@ -33,16 +33,6 @@ public class UserDAO extends BaseDAO<UserModel> {
     }
 
     @Override
-    protected String getDeleteSql() {
-        return "DELETE FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
-    protected String getSelectSql() {
-        return "SELECT * FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
     protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, UserModel model) throws SQLException {
         ps.setString(1, model.getId());
         ps.setString(2, model.getName());

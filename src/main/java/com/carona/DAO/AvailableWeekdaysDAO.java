@@ -33,16 +33,6 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
     }
 
     @Override
-    protected String getDeleteSql() {
-        return "DELETE FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
-    protected String getSelectSql() {
-        return "SELECT * FROM [" + getTableName() + "] WHERE id = ?";
-    }
-
-    @Override
     protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, AvailableWeekdaysModel model)
             throws SQLException {
         ps.setInt(1, model.getId());

@@ -12,20 +12,30 @@ import com.carona.models.AbstractModel;
 
 public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> {
     protected abstract String getTableName();
-    
+
     protected abstract String getInsertSql();
+
     protected abstract String getUpdateSql();
-    protected abstract String getDeleteSql();
-    protected abstract String getSelectSql();
 
     protected abstract PreparedStatement prepareStatementForInsert(PreparedStatement ps, T model) throws SQLException;
+
     protected abstract PreparedStatement prepareStatementForUpdate(PreparedStatement ps, T model) throws SQLException;
+
     protected abstract PreparedStatement prepareStatementForRemove(PreparedStatement ps, T model) throws SQLException;
+
     protected abstract PreparedStatement prepareStatementForRead(PreparedStatement ps, T model) throws SQLException;
 
     protected abstract T convertToModel(ResultSet rs) throws SQLException;
 
-    private String selectAllSql() {
+    protected String getDeleteSql() {
+        return "DELETE FROM [" + getTableName() + "] WHERE id = ?";
+    };
+
+    protected String getSelectSql() {
+        return "SELECT * FROM [" + getTableName() + "] WHERE id = ?";
+    };
+
+    private String getSelectAllSql() {
         return "SELECT * FROM [" + getTableName() + "]";
     }
 
@@ -36,7 +46,7 @@ public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> 
 
         try {
             conn = Connector.getInstance();
-            
+
             ps = conn.prepareStatement(getInsertSql());
 
             ps = prepareStatementForInsert(ps, e);
@@ -89,7 +99,7 @@ public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> 
             ps = conn.prepareStatement(getDeleteSql());
 
             ps = prepareStatementForRemove(ps, e);
-            
+
             ps.executeUpdate();
         } finally {
             if (ps != null) {
@@ -141,7 +151,7 @@ public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> 
 
             stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery(selectAllSql());
+            ResultSet rs = stmt.executeQuery(getSelectAllSql());
 
             while (rs.next()) {
                 users.add(convertToModel(rs));
@@ -159,5 +169,4 @@ public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> 
         }
     }
 
-    
 }
