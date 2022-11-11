@@ -1,8 +1,6 @@
 package com.carona.models;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 public class PostModel extends AbstractModel<Integer> {
 
@@ -10,7 +8,7 @@ public class PostModel extends AbstractModel<Integer> {
     }
 
     public PostModel(String title, String description, LocationModel placeOfDeparture, LocationModel destination,
-            Integer availableSeats, LocalDateTime departureTime) {
+            AvailableWeekdaysModel availableWeekdays, Integer availableSeats, LocalDateTime departureTime) {
         this.title = title;
         this.description = description;
         this.placeOfDeparture = placeOfDeparture;
@@ -23,7 +21,7 @@ public class PostModel extends AbstractModel<Integer> {
     private String description;
     private LocationModel placeOfDeparture;
     private LocationModel destination;
-    private final List<Boolean> availableWeekdays = Arrays.asList(false, false, false, false, false, false, false);
+    private AvailableWeekdaysModel availableWeekdays;
     private Integer availableSeats;
     private LocalDateTime departureTime;
 
@@ -59,8 +57,12 @@ public class PostModel extends AbstractModel<Integer> {
         this.destination = destination;
     }
 
-    public List<Boolean> getAvailableWeekdays() {
+    public AvailableWeekdaysModel getAvailableWeekdays() {
         return availableWeekdays;
+    }
+
+    public void setAvailableWeekdays(AvailableWeekdaysModel availableWeekdays) {
+        this.availableWeekdays = availableWeekdays;
     }
 
     public Integer getAvailableSeats() {
