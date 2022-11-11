@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import com.carona.models.AvailableWeekdaysModel;
 
-public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
+public class AvailableWeekdaysDAO extends BaseDAO<Integer, AvailableWeekdaysModel> {
 
     @Override
     protected String getTableName() {
@@ -88,6 +88,13 @@ public class AvailableWeekdaysDAO extends BaseDAO<AvailableWeekdaysModel> {
                 rs.getBoolean("thursday"),
                 rs.getBoolean("friday"),
                 rs.getBoolean("saturday"));
+    }
+
+    public AvailableWeekdaysModel readById(Integer id) throws SQLException {
+        AvailableWeekdaysModel model = new AvailableWeekdaysModel();
+        model.setId(id);
+
+        return readById(model);
     }
 
 }

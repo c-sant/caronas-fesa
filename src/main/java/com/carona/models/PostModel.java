@@ -1,19 +1,22 @@
 package com.carona.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class PostModel extends AbstractModel<Integer> {
 
     public PostModel() {
     }
 
-    public PostModel(String title, String description, LocationModel placeOfDeparture, LocationModel destination,
-            AvailableWeekdaysModel availableWeekdays, Integer availableSeats, LocalDateTime departureTime) {
+    public PostModel(Integer id, String title, String description, LocationModel placeOfDeparture,
+            LocationModel destination, AvailableWeekdaysModel availableWeekdays, Integer availableSeats,
+            LocalTime departureTime) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.placeOfDeparture = placeOfDeparture;
         this.destination = destination;
         this.availableSeats = availableSeats;
+        this.availableWeekdays = availableWeekdays;
         this.departureTime = departureTime;
     }
 
@@ -23,7 +26,7 @@ public class PostModel extends AbstractModel<Integer> {
     private LocationModel destination;
     private AvailableWeekdaysModel availableWeekdays;
     private Integer availableSeats;
-    private LocalDateTime departureTime;
+    private LocalTime departureTime;
 
     public String getTitle() {
         return title;
@@ -73,11 +76,11 @@ public class PostModel extends AbstractModel<Integer> {
         this.availableSeats = availableSeats;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public LocalTime getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(LocalTime departureTime) {
         this.departureTime = departureTime;
     }
 

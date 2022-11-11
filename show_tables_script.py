@@ -30,4 +30,4 @@ def read_table(table: str) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    print(read_table("AvailableWeekdays"))
+    print(read_table("Post"))

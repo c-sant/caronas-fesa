@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.carona.models.Course;
 import com.carona.models.UserModel;
 
-public class UserDAO extends BaseDAO<UserModel> {
+public class UserDAO extends BaseDAO<String, UserModel> {
 
     private static final String UPDATE_PASSWORD_SQL = "UPDATE [User] SET password = ? WHERE id = ?";
 
@@ -103,6 +103,13 @@ public class UserDAO extends BaseDAO<UserModel> {
                 conn.close();
             }
         }
+    }
+
+    public UserModel readById(String id) throws SQLException {
+        UserModel model = new UserModel();
+        model.setId(id);
+
+        return readById(model);
     }
 
 }

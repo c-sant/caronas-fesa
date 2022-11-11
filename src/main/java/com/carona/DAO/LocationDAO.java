@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import com.carona.models.LocationModel;
 
-public class LocationDAO extends BaseDAO<LocationModel> {
+public class LocationDAO extends BaseDAO<Integer, LocationModel> {
 
     @Override
     protected String getTableName() {
@@ -67,6 +67,13 @@ public class LocationDAO extends BaseDAO<LocationModel> {
                 rs.getInt("id"),
                 rs.getDouble("latitude"),
                 rs.getDouble("longitude"));
+    }
+
+    public LocationModel readById(Integer id) throws SQLException {
+        LocationModel model = new LocationModel();
+        model.setId(id);
+
+        return readById(model);
     }
 
 }

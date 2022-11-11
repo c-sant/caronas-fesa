@@ -1,5 +1,7 @@
 package com.carona.DAO;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +12,7 @@ import java.util.List;
 
 import com.carona.models.AbstractModel;
 
-public abstract class BaseDAO<T extends AbstractModel> implements GenericDAO<T> {
+public abstract class BaseDAO<E, T extends AbstractModel<E>> implements GenericDAO<T> {
     protected abstract String getTableName();
 
     protected abstract String getInsertSql();
