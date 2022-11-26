@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.carona.models.PostModel;
+import com.carona.models.UserModel;
 import com.carona.models.LocationModel;
 import com.carona.models.AvailableWeekdaysModel;
 
@@ -19,6 +20,7 @@ public class PostDAO implements GenericDAO<PostModel> {
     private static final String SELECT_ALL_SQL = "SELECT * FROM [Post]";
 
     private static final String UPDATE_USER_SQL = "UPDATE [Post] SET " +
+        "creator_id = ? , " +
         "title = ? , " +
         "description = ? , " +
         "place_of_departure = ? , " +
@@ -30,7 +32,7 @@ public class PostDAO implements GenericDAO<PostModel> {
 
     private static final String DELETE_SQL = "DELETE FROM [Post] WHERE id = ?";
 
-    private static final String INSERT_SQL = "INSERT INTO [Post] VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_SQL = "INSERT INTO [Post] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private LocationDAO locationDAO = new LocationDAO();
     private AvailableWeekdaysDAO availableWeekdaysDAO = new AvailableWeekdaysDAO();
@@ -55,13 +57,14 @@ public class PostDAO implements GenericDAO<PostModel> {
 
             model.setId(getNextId(conn));
             ps.setInt(1, model.getId());
-            ps.setString(2, model.getTitle());
-            ps.setString(3, model.getDescription());
-            ps.setInt(4, model.getPlaceOfDeparture().getId());
-            ps.setInt(5, model.getDestination().getId());
-            ps.setInt(6, model.getAvailableWeekdays().getId());
-            ps.setInt(7, model.getAvailableSeats());
-            ps.setString(8, model.getDepartureTime().toString());
+            ps.setString(2, model.getCreator().getId());
+            ps.setString(3, model.getTitle());
+            ps.setString(4, model.getDescription());
+            ps.setInt(5, model.getPlaceOfDeparture().getId());
+            ps.setInt(6, model.getDestination().getId());
+            ps.setInt(7, model.getAvailableWeekdays().getId());
+            ps.setInt(8, model.getAvailableSeats());
+            ps.setString(9, model.getDepartureTime().toString());
     
 
             ps.executeUpdate();
@@ -218,11 +221,13 @@ public class PostDAO implements GenericDAO<PostModel> {
         LocationModel placeOfDeparture = locationDAO.readById(new LocationModel(rs.getInt("place_of_departure")));
         LocationModel destination = locationDAO.readById(new LocationModel(rs.getInt("destination")));
         AvailableWeekdaysModel availableWeekdays = availableWeekdaysDAO.readById(new AvailableWeekdaysModel(rs.getInt("available_weekdays")));
+        UserModel creator = new UserModel(rs.getString("creator_id"));
 
         LocalTime departureTime = LocalTime.parse(rs.getString("departure_time"));
 
         return new PostModel(
                 rs.getInt("id"),
+                creator,
                 rs.getString("title"),
                 rs.getString("description"),
                 placeOfDeparture,

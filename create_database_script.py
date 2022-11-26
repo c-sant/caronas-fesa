@@ -28,6 +28,7 @@ try:
         DROP TABLE IF EXISTS [Post];
         CREATE TABLE IF NOT EXISTS [Post] (
             [id] INTEGER PRIMARY KEY,
+            [creator_id] TEXT,
             [title] TEXT,
             [description] TEXT,
             [place_of_departure] INTEGER,
@@ -35,6 +36,7 @@ try:
             [available_weekdays] INTEGER,
             [available_seats] INTEGER,
             [departure_time] TEXT,
+            FOREIGN KEY([available_weekdays]) REFERENCES [User](id),
             FOREIGN KEY([place_of_departure]) REFERENCES [Location](id) ON DELETE CASCADE,
             FOREIGN KEY([destination]) REFERENCES [Location](id) ON DELETE CASCADE,
             FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id) ON DELETE CASCADE

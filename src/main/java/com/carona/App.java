@@ -14,8 +14,10 @@ import java.time.LocalTime;
 import com.carona.DAO.AvailableWeekdaysDAO;
 import com.carona.DAO.LocationDAO;
 import com.carona.DAO.PostDAO;
+import com.carona.DAO.UserDAO;
 import com.carona.controllers.PostController;
 import com.carona.models.AvailableWeekdaysModel;
+import com.carona.models.Course;
 import com.carona.models.LocationModel;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
@@ -91,9 +93,20 @@ public class App extends Application {
         // dao.remove(newModel);
         // System.out.println("Após deletado = " + dao.readById(newModel));
 
+        UserDAO userDAO = new UserDAO();
+        UserModel user = userDAO.readById("081200007");
+        if (user == null) {
+            user = new UserModel("081200007", "Guilherme", "Alguma coisa sobre mim", Course.ComputerEngineering, "(11) 98741-0155", "12345678");
+            userDAO.insert(user);   
+        }
+        
+
+        UserModel n_user = userDAO.readById("081200007"); 
+    
         PostDAO dao = new PostDAO();
         PostModel model = new PostModel(
                 -1, 
+                n_user,
                 "Post teste", 
                 "Descrição para post teste", 
                 new LocationModel(-1, 10.1, 20.2),
@@ -116,6 +129,7 @@ public class App extends Application {
         PostModel newModel = dao.readById(new PostModel(newId));
 
         System.out.println("Id = " + newModel.getId());
+        System.out.println("Id do criador = " + newModel.getCreator().getId());
         System.out.println("Título = " + newModel.getTitle());
         System.out.println("Destination latitude = " + newModel.getDestination().getLatitude());
         System.out.println("Place of departure latitude = " + newModel.getPlaceOfDeparture().getLatitude());

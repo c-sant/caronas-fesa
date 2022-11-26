@@ -11,10 +11,11 @@ public class PostModel extends AbstractModel<Integer> {
         this.id = id;
     }
 
-    public PostModel(Integer id, String title, String description, LocationModel placeOfDeparture,
+    public PostModel(Integer id, UserModel creator, String title, String description, LocationModel placeOfDeparture,
             LocationModel destination, AvailableWeekdaysModel availableWeekdays, Integer availableSeats,
             LocalTime departureTime) {
         this.id = id;
+        this.creator = creator;
         this.title = title;
         this.description = description;
         this.placeOfDeparture = placeOfDeparture;
@@ -24,6 +25,7 @@ public class PostModel extends AbstractModel<Integer> {
         this.departureTime = departureTime;
     }
 
+    private UserModel creator;
     private String title;
     private String description;
     private LocationModel placeOfDeparture;
@@ -31,6 +33,14 @@ public class PostModel extends AbstractModel<Integer> {
     private AvailableWeekdaysModel availableWeekdays;
     private Integer availableSeats;
     private LocalTime departureTime;
+
+    public UserModel getCreator() {
+        return creator;
+    }
+
+    public void setCreator(UserModel creator) {
+        this.creator = creator;
+    }
 
     public String getTitle() {
         return title;
