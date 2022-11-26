@@ -16,11 +16,15 @@ import com.carona.DAO.LocationDAO;
 import com.carona.DAO.PostDAO;
 import com.carona.DAO.UserDAO;
 import com.carona.controllers.PostController;
+import com.carona.exceptions.BlankFieldsException;
+import com.carona.exceptions.EntityAlreadyExistsException;
+import com.carona.exceptions.EntityDoesNotExistException;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.Course;
 import com.carona.models.LocationModel;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
+import com.carona.services.PostService;
 
 /**
  * JavaFX App
@@ -39,71 +43,16 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException {
-        // AvailableWeekdaysDAO dao = new AvailableWeekdaysDAO();
-        // AvailableWeekdaysModel model = new AvailableWeekdaysModel(
-        //     -1, true, true, false, false, true, false, true
-        // );
-        // dao.insert(model);
-        // Integer newId = model.getId();
-        // System.out.println("Id criado = " + newId);
-
-        // model.setMonday(false);
-        // model.setTuesday(true);
-        // dao.update(model);
-
-        // AvailableWeekdaysModel newModel = new AvailableWeekdaysModel();
-        // newModel.setId(newId);
-        // newModel = dao.readById(newModel);
-
-        // System.out.println("Id lido = " + newModel.getId());
-        // System.out.println("Segunda deve ser false = " + newModel.getMonday());
-        // System.out.println("Terça deve ser true = " + newModel.getTuesday());
-        
-        // for (AvailableWeekdaysModel iterable_element : dao.readAll()) {
-        //     System.out.println(iterable_element.getId());
-        // }
-
-        // dao.remove(newModel);
-        // System.out.println("Após deletado = " + dao.readById(newModel));
-        
-
-        // LocationDAO dao = new LocationDAO();
-        // LocationModel model = new LocationModel(-1, 10.2, 11.2);
-        // dao.insert(model);
-        // Integer newId = model.getId();
-        // System.out.println("Id criado = " + newId);
-
-        // model.setLatitude(9.2);
-        // model.setLongitude(12.2);
-        // dao.update(model);
-
-        // LocationModel newModel = new LocationModel();
-        // newModel.setId(newId);
-        // newModel = dao.readById(newModel);
-
-        // System.out.println("Id lido = " + newModel.getId());
-        // System.out.println("Latitude deve ser 9.2 = " + newModel.getLatitude());
-        // System.out.println("Longitude deve ser 12.2 = " + newModel.getLongitude());
-        
-        // for (LocationModel iterable_element : dao.readAll()) {
-        //     System.out.println(iterable_element.getId());
-        // }
-
-        // dao.remove(newModel);
-        // System.out.println("Após deletado = " + dao.readById(newModel));
-
+    public void start(Stage stage) throws IOException, SQLException, BlankFieldsException, EntityAlreadyExistsException, EntityDoesNotExistException { 
         UserDAO userDAO = new UserDAO();
         UserModel user = userDAO.readById("081200007");
         if (user == null) {
             user = new UserModel("081200007", "Guilherme", "Alguma coisa sobre mim", Course.ComputerEngineering, "(11) 98741-0155", "12345678");
             userDAO.insert(user);   
         }
-        
-
+    
         UserModel n_user = userDAO.readById("081200007"); 
     
-        PostDAO dao = new PostDAO();
         PostModel model = new PostModel(
                 -1, 
                 n_user,
@@ -115,7 +64,10 @@ public class App extends Application {
                 2, 
                 LocalTime.now()
             );
-        dao.insert(model);
+
+        PostService service = new PostService();
+        service.create(model);
+
         Integer newId = model.getId();
         System.out.println("Id criado = " + newId);
 
@@ -124,9 +76,9 @@ public class App extends Application {
         model.getPlaceOfDeparture().setLatitude(2.2);
         model.getAvailableWeekdays().setSunday(true);
         
-        dao.update(model);
+        service.update(model);
 
-        PostModel newModel = dao.readById(new PostModel(newId));
+        PostModel newModel = service.readById(newId);
 
         System.out.println("Id = " + newModel.getId());
         System.out.println("Id do criador = " + newModel.getCreator().getId());
@@ -135,12 +87,12 @@ public class App extends Application {
         System.out.println("Place of departure latitude = " + newModel.getPlaceOfDeparture().getLatitude());
         System.out.println("Domingo = " + newModel.getAvailableWeekdays().getSunday());
         
-        for (PostModel iterable_element : dao.readAll()) {
+        for (PostModel iterable_element : service.readAll()) {
             System.out.println(iterable_element.getId());
         }
 
-        dao.remove(newModel);
-        System.out.println("Após deletado = " + dao.readById(newModel));
+        service.remove(newModel);
+        System.out.println("Após deletado = " + service.readById(newId));
 
 
         scene = new Scene(loadFXML("loginScreen"), 300, 500);

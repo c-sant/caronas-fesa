@@ -109,13 +109,14 @@ public class PostDAO implements GenericDAO<PostModel> {
             ps = conn.prepareStatement(UPDATE_USER_SQL);
             
             ps.setString(1, model.getTitle());
-            ps.setString(2, model.getDescription());
-            ps.setInt(3, model.getPlaceOfDeparture().getId());
-            ps.setInt(4, model.getDestination().getId());
-            ps.setInt(5, model.getAvailableWeekdays().getId());
-            ps.setInt(6, model.getAvailableSeats());
-            ps.setString(7, model.getDepartureTime().toString());
-            ps.setInt(8, model.getId());
+            ps.setString(2, model.getCreator().getId());
+            ps.setString(3, model.getDescription());
+            ps.setInt(4, model.getPlaceOfDeparture().getId());
+            ps.setInt(5, model.getDestination().getId());
+            ps.setInt(6, model.getAvailableWeekdays().getId());
+            ps.setInt(7, model.getAvailableSeats());
+            ps.setString(8, model.getDepartureTime().toString());
+            ps.setInt(9, model.getId());
 
             ps.executeUpdate();
 

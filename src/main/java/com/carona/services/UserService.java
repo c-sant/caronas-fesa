@@ -17,9 +17,7 @@ public class UserService {
         Boolean userExists = userDAO.readById(user) != null;
 
         if (userExists) {
-            throw new EntityAlreadyExistsException("User already exists with id " + user.getId()); // Criar classe que
-                                                                                                   // herda de
-                                                                                                   // Exception.
+            throw new EntityAlreadyExistsException("User already exists with id " + user.getId()); 
         }
 
         String password = user.getPassword();
@@ -32,7 +30,7 @@ public class UserService {
         userDAO.insert(user);
     }
 
-    public UserModel getUserById(String id) throws Exception, SQLException {
+    public UserModel readById(String id) throws Exception, SQLException {
         UserDAO userDAO = new UserDAO();
         UserModel searchUser = new UserModel();
         searchUser.setId(id);
