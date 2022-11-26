@@ -29,6 +29,11 @@ public class LoginController {
     @FXML
     Button btnRegister;
 
+    public void initialize() {
+        txtName.setText("081200007");
+        txtPassword.setText("12345678");
+    }
+
     AuthService authService = new AuthService();
 
     @FXML

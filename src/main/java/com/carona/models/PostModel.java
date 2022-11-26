@@ -7,6 +7,10 @@ public class PostModel extends AbstractModel<Integer> {
     public PostModel() {
     }
 
+    public PostModel(Integer id) {
+        this.id = id;
+    }
+
     public PostModel(Integer id, String title, String description, LocationModel placeOfDeparture,
             LocationModel destination, AvailableWeekdaysModel availableWeekdays, Integer availableSeats,
             LocalTime departureTime) {

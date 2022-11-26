@@ -35,9 +35,9 @@ try:
             [available_weekdays] INTEGER,
             [available_seats] INTEGER,
             [departure_time] TEXT,
-            FOREIGN KEY([place_of_departure]) REFERENCES [Location](id),
-            FOREIGN KEY([destination]) REFERENCES [Location](id),
-            FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id)
+            FOREIGN KEY([place_of_departure]) REFERENCES [Location](id) ON DELETE CASCADE,
+            FOREIGN KEY([destination]) REFERENCES [Location](id) ON DELETE CASCADE,
+            FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id) ON DELETE CASCADE
         );
 
         DROP TABLE IF EXISTS [AvailableWeekdays];

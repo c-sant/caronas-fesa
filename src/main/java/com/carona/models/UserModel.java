@@ -5,6 +5,10 @@ public class UserModel extends AbstractModel<String> {
     public UserModel() {
     }
 
+    public UserModel(String id) {
+        this.id = id;
+    }
+
     public UserModel(String id, String name, String description, Course course, String phoneNumber,
             String password) {
         this.id = id;

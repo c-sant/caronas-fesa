@@ -4,80 +4,174 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.carona.models.Course;
 import com.carona.models.UserModel;
 
-public class UserDAO extends BaseDAO<String, UserModel> {
+public class UserDAO implements GenericDAO<UserModel> {
+
+    private static final String SELECT_SQL = "SELECT * FROM [User] WHERE id = ?";
+    private static final String SELECT_ALL_SQL = "SELECT * FROM [User]";
 
     private static final String UPDATE_PASSWORD_SQL = "UPDATE [User] SET password = ? WHERE id = ?";
+    private static final String UPDATE_USER_SQL = "UPDATE [User] SET " +
+        "name = ? , " +
+        "description = ? , " +
+        "course = ? , " +
+        "phone_number = ? " +
+        "WHERE id = ? ";
+
+    private static final String DELETE_SQL = "DELETE FROM [User] WHERE id = ?";
+
+    private static final String INSERT_SQL = "INSERT INTO [User] VALUES (?, ?, ?, ?, ?, ?)";
 
     @Override
-    protected String getTableName() {
-        return "User";
+    public void insert(UserModel model) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = Connector.getInstance();
+
+            ps = conn.prepareStatement(INSERT_SQL);
+
+            ps.setString(1, model.getId());
+            ps.setString(2, model.getName());
+            ps.setString(3, model.getDescription());
+            ps.setInt(4, model.getCourse().getValue());
+            ps.setString(5, model.getPhoneNumber());
+            ps.setString(6, model.getPassword());
+
+            ps.executeUpdate();
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
 
+    
     @Override
-    protected String getInsertSql() {
-        return "INSERT INTO [" + getTableName() + "] VALUES (?, ?, ?, ?, ?, ?)";
+    public void update(UserModel model) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+
+            conn = Connector.getInstance();
+            ps = conn.prepareStatement(UPDATE_USER_SQL);
+            
+            ps.setString(1, model.getName());
+            ps.setString(2, model.getDescription());
+            ps.setInt(3, model.getCourse().getValue());
+            ps.setString(4, model.getPhoneNumber());
+            ps.setString(5, model.getId());
+
+            ps.executeUpdate();
+
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
 
+    
+
     @Override
-    protected String getUpdateSql() {
-        return "UPDATE [" + getTableName() + "] SET " +
-                "name = ? , " +
-                "description = ? , " +
-                "course = ? , " +
-                "phone_number = ? " +
-                "WHERE id = ? ";
+    public void remove(UserModel model) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = Connector.getInstance();
+            ps = conn.prepareStatement(DELETE_SQL);
+
+            ps.setString(1, model.getId());
+
+            ps.executeUpdate();
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
     }
 
+    
+    
     @Override
-    protected PreparedStatement prepareStatementForInsert(PreparedStatement ps, UserModel model) throws SQLException {
-        ps.setString(1, model.getId());
-        ps.setString(2, model.getName());
-        ps.setString(3, model.getDescription());
-        ps.setInt(4, model.getCourse().getValue());
-        ps.setString(5, model.getPhoneNumber());
-        ps.setString(6, model.getPassword());
+    public UserModel readById(UserModel model) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
 
-        return ps;
+        try {
+            conn = Connector.getInstance();
+            ps = conn.prepareStatement(SELECT_SQL);
+
+            ps.setString(1, model.getId());
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return convertToModel(rs);
+            }
+
+            return null;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
 
+    
+    
     @Override
-    protected PreparedStatement prepareStatementForUpdate(PreparedStatement ps, UserModel model) throws SQLException {
-        ps.setString(1, model.getName());
-        ps.setString(2, model.getDescription());
-        ps.setInt(3, model.getCourse().getValue());
-        ps.setString(4, model.getPhoneNumber());
-        ps.setString(5, model.getId());
+    public List<UserModel> readAll() throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        List<UserModel> users = new ArrayList<UserModel>();
 
-        return ps;
-    }
+        try {
+            conn = Connector.getInstance();
 
-    @Override
-    protected PreparedStatement prepareStatementForRemove(PreparedStatement ps, UserModel model) throws SQLException {
-        ps.setString(1, model.getId());
+            stmt = conn.createStatement();
 
-        return ps;
-    }
+            ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
 
-    @Override
-    protected PreparedStatement prepareStatementForRead(PreparedStatement ps, UserModel model) throws SQLException {
-        ps.setString(1, model.getId());
+            while (rs.next()) {
+                users.add(convertToModel(rs));
+            }
 
-        return ps;
-    }
+            return users;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
 
-    @Override
-    protected UserModel convertToModel(ResultSet rs) throws SQLException {
-        return new UserModel(
-                rs.getString("Id"),
-                rs.getString("name"),
-                rs.getString("description"),
-                Course.fromInteger(rs.getInt("course")),
-                rs.getString("phone_number"),
-                rs.getString("password"));
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
 
     public void updatePassword(UserModel e) throws SQLException {
@@ -112,4 +206,13 @@ public class UserDAO extends BaseDAO<String, UserModel> {
         return readById(model);
     }
 
+    protected UserModel convertToModel(ResultSet rs) throws SQLException {
+        return new UserModel(
+                rs.getString("Id"),
+                rs.getString("name"),
+                rs.getString("description"),
+                Course.fromInteger(rs.getInt("course")),
+                rs.getString("phone_number"),
+                rs.getString("password"));
+    }
 }

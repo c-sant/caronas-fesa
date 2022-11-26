@@ -5,6 +5,10 @@ public class LocationModel extends AbstractModel<Integer> {
     public LocationModel() {
     }
 
+    public LocationModel(Integer id) {
+        this.id = id;
+    }
+
     public LocationModel(Integer id, Double latitude, Double longitude) {
         this.id = id;
         this.latitude = latitude;
