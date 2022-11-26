@@ -10,8 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carona.controllers.ScreenController">
+<Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" stylesheets="@../styles/styleBase.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.carona.controllers.ScreenController">
    <children>
       <Pane layoutY="450.0" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: #2e50c4;">
          <children>
@@ -39,8 +38,30 @@
       <Pane prefHeight="450.0" prefWidth="300.0" style="-fx-background-color: #aab0e7;">
          <children>
             <Line endX="260.0" layoutX="15.0" layoutY="74.0" startX="15.0" stroke="WHITE" strokeWidth="2.0" />
-            <Pane fx:id="panePrincipal" layoutX="29.0" layoutY="88.0" prefHeight="339.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" />
-            <Pane fx:id="paneHeader" layoutX="29.0" layoutY="12.0" prefHeight="50.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" />
+            <!-- <Pane fx:id="paneHeader" layoutX="29.0" layoutY="12.0" prefHeight="50.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" /> -->
+            <Pane fx:id="paneHeader" layoutX="29.0" layoutY="12.0" prefHeight="50.0" prefWidth="247.0" style="-fx-background-color: #aab0e7; -fx-background-radius: 5;">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="116.0" layoutX="3.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/logo-carona-test-small.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="btnAddPost" fitHeight="23.0" fitWidth="27.0" layoutX="185.0" layoutY="15.0" onMouseClicked="#onClickCreatePost" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@../imgs/add-icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="23.0" fitWidth="36.0" layoutX="215.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/notification-icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <TextField fx:id="txtSearch" layoutX="29.0" layoutY="83.0" prefHeight="25.0" prefWidth="247.0" promptText="Pesquise por titulo ou descrição" />
+            <TextField fx:id="txtLocale" layoutX="29.0" layoutY="119.0" prefHeight="25.0" prefWidth="107.0" promptText="Local" />
+            <TextField fx:id="txtDays" layoutX="169.0" layoutY="119.0" prefHeight="25.0" prefWidth="107.0" promptText="Dias da semana" />
+            <Pane fx:id="panePrincipal" layoutX="28.0" layoutY="83.0" prefHeight="339.0" prefWidth="250.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" />
          </children>
       </Pane>
    </children>

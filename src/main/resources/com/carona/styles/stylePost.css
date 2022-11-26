@@ -1,0 +1,7 @@
+.selected{
+    -fx-background-color: #0d3ab0 !important;
+}
+
+.pointer{
+    -fx-cursor: hand;
+}
