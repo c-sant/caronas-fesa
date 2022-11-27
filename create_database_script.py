@@ -15,7 +15,9 @@ try:
             [description] TEXT,
             [course] INTEGER,
             [phone_number] TEXT,
-            [password] TEXT
+            [password] TEXT,
+            [notification_config] INTEGER,
+            FOREIGN KEY([notification_config]) REFERENCES [NotificationConfig](id)
         );
         
         DROP TABLE IF EXISTS [Location];
@@ -36,7 +38,7 @@ try:
             [available_weekdays] INTEGER,
             [available_seats] INTEGER,
             [departure_time] TEXT,
-            FOREIGN KEY([available_weekdays]) REFERENCES [User](id),
+            FOREIGN KEY([creator_id]) REFERENCES [User](id),
             FOREIGN KEY([place_of_departure]) REFERENCES [Location](id) ON DELETE CASCADE,
             FOREIGN KEY([destination]) REFERENCES [Location](id) ON DELETE CASCADE,
             FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id) ON DELETE CASCADE
@@ -52,7 +54,31 @@ try:
             [thursday] BOOLEAN, 
             [friday] BOOLEAN, 
             [saturday] BOOLEAN
-        )
+        );
+
+        DROP TABLE IF EXISTS [Notification];
+        CREATE TABLE IF NOT EXISTS [Notification] (
+            [id] INTEGER PRIMARY KEY,
+            [viewed] BOOLEAN,
+            [subscriber] TEXT,
+            [post] INTEGER,
+            [notification_time] TEXT,
+            FOREIGN KEY([subscriber]) REFERENCES [User](id),
+            FOREIGN KEY([post]) REFERENCES [Post](id)
+        );
+
+        
+        DROP TABLE IF EXISTS [NotificationConfig];
+        CREATE TABLE IF NOT EXISTS [NotificationConfig] (
+            [id] INTEGER PRIMARY KEY,
+            [receive_notification] BOOLEAN,
+            [place_of_departure] INTEGER,
+            [available_weekdays] INTEGER,
+            [initial_departure_time] TEXT,
+            [final_departure_time] TEXT,
+            FOREIGN KEY([available_weekdays]) REFERENCES [AvailableWeekdays](id),
+            FOREIGN KEY([place_of_departure]) REFERENCES [Location](id) ON DELETE CASCADE
+        );
         """
     )
 

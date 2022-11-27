@@ -12,6 +12,7 @@ import com.carona.filters.AvailableWeekdaysFilter;
 import com.carona.filters.LocationFilter;
 import com.carona.filters.PostFilter;
 import com.carona.models.PostModel;
+import com.carona.services.NotificationService;
 import com.carona.services.PostService;
 
 import javafx.fxml.FXML;
@@ -23,6 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class ScreenController {
 
@@ -40,6 +42,9 @@ public class ScreenController {
 
     @FXML
     ImageView btnAddPost;
+
+    @FXML
+    Text txtNotifications;
 
     @FXML
     TextField txtSearch;
@@ -75,11 +80,11 @@ public class ScreenController {
     ImageView btnSearchPosts;
 
     PostService postService = new PostService();
+    NotificationService notificationService = new NotificationService();
 
     private void setDafaultFilters() {
         txtSearch.setText("");
         txtLocale.setText("");
-        txtDistancia.setText("10");
 
         fillCheckBox(chkSeg, true);
         fillCheckBox(chkTer, true);
@@ -96,13 +101,28 @@ public class ScreenController {
         }
     }
 
+    
+
     @FXML
     public void initialize() throws IOException {
         panePrincipal.setVisible(false);
+
+        setNotificationCount();
         setDafaultFilters();
         reloadPosts();
 
         // paneHeader.getChildren().add(App.loadFXML("mainHeaderScreen"));
+    }
+
+    private void setNotificationCount() {
+        try {
+            Integer notificationsCount = notificationService.countUserUnreadNotifications(App.getUser());
+        
+            txtNotifications.setText(notificationsCount.toString());
+        } catch (SQLException ex) {
+            System.out.println("Falha no carregamento dos posts");
+        }
+        
     }
 
     @FXML
@@ -126,6 +146,7 @@ public class ScreenController {
     private void onClickHome() throws IOException {
         setDafaultFilters();
         reloadPosts();
+        setNotificationCount();
     }
 
     private void resetPosition(){
@@ -173,6 +194,7 @@ public class ScreenController {
     @FXML
     private void onClickSearchPosts() throws IOException {
         reloadPosts();
+        setNotificationCount();
     }
 
     private ScrollPane setDataInVBox() throws IOException {

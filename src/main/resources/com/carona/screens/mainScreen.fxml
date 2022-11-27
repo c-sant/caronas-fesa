@@ -56,6 +56,11 @@
                         <Image url="@../imgs/notification-icon.png" />
                      </image>
                   </ImageView>
+                  <Text fx:id="txtNotifications" fill="RED" layoutX="228.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
             <TextField fx:id="txtSearch" layoutX="29.0" layoutY="83.0" prefHeight="25.0" prefWidth="213.0" promptText="Pesquise por titulo ou descrição" />
@@ -73,7 +78,7 @@
             </ImageView>
             <Pane fx:id="panePrincipal" layoutX="29.0" layoutY="75.0" prefHeight="339.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" />
             <CheckBox fx:id="chkDom" layoutX="238.0" layoutY="151.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="48.0" text="dom" />
-            <TextField fx:id="txtDistancia" layoutX="30.0" layoutY="146.0" prefHeight="25.0" prefWidth="88.0" promptText="Distãncia máx" text="Distãncia máx" />
+            <TextField fx:id="txtDistancia" layoutX="30.0" layoutY="146.0" prefHeight="25.0" prefWidth="88.0" promptText="Distância máx" text="10" />
             <Text fill="WHITE" layoutX="119.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km" />
          </children>
       </Pane>

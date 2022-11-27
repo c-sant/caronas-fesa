@@ -10,13 +10,14 @@ public class UserModel extends AbstractModel<String> {
     }
 
     public UserModel(String id, String name, String description, Course course, String phoneNumber,
-            String password) {
+            String password, NotificationConfigModel notificationConfigModel) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.course = course;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.notificationConfigModel = notificationConfigModel;
     }
 
     private String name;
@@ -24,6 +25,15 @@ public class UserModel extends AbstractModel<String> {
     private Course course;
     private String phoneNumber;
     private String password;
+    NotificationConfigModel notificationConfigModel;
+
+    public NotificationConfigModel getNotificationConfigModel() {
+        return notificationConfigModel;
+    }
+
+    public void setNotificationConfigModel(NotificationConfigModel notificationConfigModel) {
+        this.notificationConfigModel = notificationConfigModel;
+    }
 
     public String getName() {
         return name;

@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.carona.models.Course;
+import com.carona.models.NotificationConfigModel;
 import com.carona.models.UserModel;
 
 public class UserDAO implements GenericDAO<UserModel> {
@@ -21,12 +23,13 @@ public class UserDAO implements GenericDAO<UserModel> {
         "name = ? , " +
         "description = ? , " +
         "course = ? , " +
-        "phone_number = ? " +
+        "phone_number = ? , " +
+        "phone_number = ? , " +
         "WHERE id = ? ";
 
     private static final String DELETE_SQL = "DELETE FROM [User] WHERE id = ?";
 
-    private static final String INSERT_SQL = "INSERT INTO [User] VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_SQL = "INSERT INTO [User] VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     @Override
     public void insert(UserModel model) throws SQLException {
@@ -44,6 +47,12 @@ public class UserDAO implements GenericDAO<UserModel> {
             ps.setInt(4, model.getCourse().getValue());
             ps.setString(5, model.getPhoneNumber());
             ps.setString(6, model.getPassword());
+
+            if (model.getNotificationConfigModel() == null) {
+                ps.setNull(7, Types.INTEGER);
+            } else {
+                ps.setInt(7, model.getNotificationConfigModel().getId());
+            }
 
             ps.executeUpdate();
         } finally {
@@ -207,12 +216,20 @@ public class UserDAO implements GenericDAO<UserModel> {
     }
 
     protected UserModel convertToModel(ResultSet rs) throws SQLException {
+        Integer notificationId = rs.getInt("notification_config");
+        NotificationConfigModel notificationConfigModel = null;
+        if (notificationId != null) {
+            notificationConfigModel = new NotificationConfigModel(notificationId);
+        }       
+        
         return new UserModel(
                 rs.getString("Id"),
                 rs.getString("name"),
                 rs.getString("description"),
                 Course.fromInteger(rs.getInt("course")),
                 rs.getString("phone_number"),
-                rs.getString("password"));
+                rs.getString("password"),
+                notificationConfigModel
+            );
     }
 }
