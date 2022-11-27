@@ -73,6 +73,8 @@
             </ImageView>
             <Pane fx:id="panePrincipal" layoutX="29.0" layoutY="75.0" prefHeight="339.0" prefWidth="247.0" style="-fx-background-color: #fff; -fx-background-radius: 5;" />
             <CheckBox fx:id="chkDom" layoutX="238.0" layoutY="151.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="48.0" text="dom" />
+            <TextField fx:id="txtDistancia" layoutX="30.0" layoutY="146.0" prefHeight="25.0" prefWidth="88.0" promptText="Distãncia máx" text="Distãncia máx" />
+            <Text fill="WHITE" layoutX="119.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="km" />
          </children>
       </Pane>
    </children>

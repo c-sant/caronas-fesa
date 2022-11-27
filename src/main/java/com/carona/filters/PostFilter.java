@@ -1,19 +1,31 @@
 package com.carona.filters;
 
-import com.carona.models.AvailableWeekdaysModel;
-import com.carona.models.LocationModel;
 
 public class PostFilter {
-    String descriptionOrTitle;
-    AvailableWeekdaysModel availableWeekdaysModel;
-    LocationModel departurePlace;
+    private String descriptionOrTitle;
+    private AvailableWeekdaysFilter availableWeekdaysFilter;
+    private LocationFilter departurePlace;
 
-    public PostFilter(String descriptionOrTitle, AvailableWeekdaysModel availableWeekdaysModel, LocationModel departurePlace) {
-        this.availableWeekdaysModel = availableWeekdaysModel;
+    public PostFilter(String descriptionOrTitle, AvailableWeekdaysFilter availableWeekdaysFilter, LocationFilter departurePlace) {
+        this.availableWeekdaysFilter = availableWeekdaysFilter;
         this.departurePlace = departurePlace;
         this.descriptionOrTitle = descriptionOrTitle;
     }
 
+    public String generateSqlFilter() {
+        String query = "WHERE (title LIKE '%" +  descriptionOrTitle + "%'" +
+            " OR description LIKE '%" + descriptionOrTitle + "%')";
+
+        if (availableWeekdaysFilter != null) {
+            query += " AND " + availableWeekdaysFilter.generateSqlFilter();
+        }
+        
+        if (departurePlace != null) {
+            query += " AND " + departurePlace.generateSqlFilter();
+        }
+
+        return query;
+    }
 
     public String getDescriptionOrTitle() {
         return descriptionOrTitle;
@@ -24,20 +36,20 @@ public class PostFilter {
     }
 
 
-    public AvailableWeekdaysModel getAvailableWeekdaysModel() {
-        return availableWeekdaysModel;
+    public AvailableWeekdaysFilter getAvailableWeekdaysFilter() {
+        return availableWeekdaysFilter;
     }
 
-    public void setAvailableWeekdaysModel(AvailableWeekdaysModel availableWeekdaysModel) {
-        this.availableWeekdaysModel = availableWeekdaysModel;
+    public void setAvailableWeekdaysFilter(AvailableWeekdaysFilter availableWeekdaysFilter) {
+        this.availableWeekdaysFilter = availableWeekdaysFilter;
     }
 
     
-    public LocationModel getDeparturePlace() {
+    public LocationFilter getDeparturePlace() {
         return departurePlace;
     }
 
-    public void setDeparturePlace(LocationModel departurePlace) {
+    public void setDeparturePlace(LocationFilter departurePlace) {
         this.departurePlace = departurePlace;
     }
 

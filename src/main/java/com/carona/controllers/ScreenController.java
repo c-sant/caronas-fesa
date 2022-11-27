@@ -8,6 +8,8 @@ import java.util.List;
 import com.carona.App;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.LocationModel;
+import com.carona.filters.AvailableWeekdaysFilter;
+import com.carona.filters.LocationFilter;
 import com.carona.filters.PostFilter;
 import com.carona.models.PostModel;
 import com.carona.services.PostService;
@@ -46,6 +48,9 @@ public class ScreenController {
     TextField txtLocale;
 
     @FXML
+    TextField txtDistancia;
+
+    @FXML
     CheckBox chkSeg;
 
     @FXML
@@ -74,6 +79,7 @@ public class ScreenController {
     private void setDafaultFilters() {
         txtSearch.setText("");
         txtLocale.setText("");
+        txtDistancia.setText("10");
 
         fillCheckBox(chkSeg, true);
         fillCheckBox(chkTer, true);
@@ -138,17 +144,17 @@ public class ScreenController {
     }
 
     private PostFilter formatPostFilter() {
-        AvailableWeekdaysModel model = new AvailableWeekdaysModel(
+        AvailableWeekdaysModel availableWeekdaysModel = new AvailableWeekdaysModel(
             -1, chkDom.isSelected(), chkSeg.isSelected(), chkTer.isSelected(), chkQua.isSelected(), 
             chkQui.isSelected(), chkSex.isSelected(), chkSab.isSelected()
         );
 
-        LocationModel departure_place = new LocationModel(-1, 10.0, 10.0); // Preencher latitude e longitude conforme filtro feito
+        LocationModel departure_place = new LocationModel(-1, 2.3, 20.2); // Preencher latitude e longitude conforme filtro feito
 
         return new PostFilter(
                 txtSearch.getText(),
-                model,
-                departure_place
+                new AvailableWeekdaysFilter(availableWeekdaysModel),
+                new LocationFilter(departure_place, Integer.parseInt(txtDistancia.getText()))
         );
     }
 

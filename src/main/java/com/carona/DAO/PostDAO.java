@@ -249,14 +249,10 @@ public class PostDAO implements GenericDAO<PostModel> {
 
             stmt = conn.createStatement();
 
-            String textFilter = postFilter.getDescriptionOrTitle();
-            String availableWeekDaysFilter = getAvailableWeekdaysFilter(postFilter.getAvailableWeekdaysModel());
-
             String advanced_select = "SELECT p.* FROM [Post] p " +
                 "inner join [AvailableWeekdays] awd on p.available_weekdays = awd.id " +
-                "WHERE (title LIKE '%" +  textFilter + "%' " +
-                "OR description LIKE '%" + textFilter + "%') " +
-                "AND " + availableWeekDaysFilter;
+                "inner join [Location] l on p.place_of_departure = l.id " +
+                postFilter.generateSqlFilter();
 
             
             ResultSet rs = stmt.executeQuery(advanced_select);
@@ -275,39 +271,6 @@ public class PostDAO implements GenericDAO<PostModel> {
                 conn.close();
             }
         }
-    }
-
-    private String getAvailableWeekdaysFilter(AvailableWeekdaysModel model) {
-        String strBuffer = "";
-        if (model.getSunday() == true) {
-            strBuffer += " sunday = 1 OR";
-        }
-        if (model.getMonday() == true) {
-            strBuffer += " monday = 1 OR";
-        }
-        if (model.getTuesday() == true) {
-            strBuffer += " tuesday = 1 OR";
-        }
-        if (model.getWednesday() == true) {
-            strBuffer += " wednesday = 1 OR";
-        }
-        if (model.getThursday() == true) {
-            strBuffer += " thursday = 1 OR";
-        }
-        if (model.getFriday() == true) {
-            strBuffer += " friday = 1 OR";
-        }
-        if (model.getSaturday() == true) {
-            strBuffer += " saturday = 1 OR";
-        }
-
-
-        if (strBuffer.length() == 0) {
-            strBuffer = "FALSE";
-        } else {
-            strBuffer = "(" + strBuffer.substring(0, strBuffer.length() - 3) + ")";
-        }
-        return strBuffer;
     }
 }
 
