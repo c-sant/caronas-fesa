@@ -15,7 +15,7 @@ public class AvailableWeekdaysDAO implements GenericDAO<AvailableWeekdaysModel> 
     private static final String SELECT_SQL = "SELECT * FROM [AvailableWeekdays] WHERE id = ?";
     private static final String SELECT_ALL_SQL = "SELECT * FROM [AvailableWeekdays]";
 
-    private static final String UPDATE_USER_SQL = "UPDATE [AvailableWeekdays] SET " +
+    private static final String UPDATE_SQL = "UPDATE [AvailableWeekdays] SET " +
         "sunday = ? , " +
         "monday = ? , " +
         "tuesday = ? , " +
@@ -87,7 +87,7 @@ public class AvailableWeekdaysDAO implements GenericDAO<AvailableWeekdaysModel> 
         try {
 
             conn = Connector.getInstance();
-            ps = conn.prepareStatement(UPDATE_USER_SQL);
+            ps = conn.prepareStatement(UPDATE_SQL);
             
             ps.setBoolean(1, model.getSunday());
             ps.setBoolean(2, model.getMonday());
@@ -173,7 +173,7 @@ public class AvailableWeekdaysDAO implements GenericDAO<AvailableWeekdaysModel> 
     public List<AvailableWeekdaysModel> readAll() throws SQLException {
         Connection conn = null;
         Statement stmt = null;
-        List<AvailableWeekdaysModel> users = new ArrayList<AvailableWeekdaysModel>();
+        List<AvailableWeekdaysModel> availableWeekdays = new ArrayList<AvailableWeekdaysModel>();
 
         try {
             conn = Connector.getInstance();
@@ -183,10 +183,10 @@ public class AvailableWeekdaysDAO implements GenericDAO<AvailableWeekdaysModel> 
             ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
 
             while (rs.next()) {
-                users.add(convertToModel(rs));
+                availableWeekdays.add(convertToModel(rs));
             }
 
-            return users;
+            return availableWeekdays;
         } finally {
             if (stmt != null) {
                 stmt.close();

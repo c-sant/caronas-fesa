@@ -62,6 +62,14 @@ public class RegisterController {
             courseIntStr.put(i, (String) cboCourse.getItems().get(i));
         }
 
+        txtStudentId.setText("081200007");
+        cboCourse.setValue("Engenharia da Computação");
+        txtName.setText("Guilherme Turtera");
+        txtDescription.setText("Aquele quem vos fala");
+        txtPassword.setText("12345678");
+        txtConfirmedPassword.setText("12345678");
+        txtPhoneNumber.setText("(11) 98741-0155");
+
     }
 
     @FXML

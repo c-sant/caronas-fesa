@@ -15,7 +15,7 @@ public class LocationDAO implements GenericDAO<LocationModel> {
     private static final String SELECT_SQL = "SELECT * FROM [Location] WHERE id = ?";
     private static final String SELECT_ALL_SQL = "SELECT * FROM [Location]";
 
-    private static final String UPDATE_USER_SQL = "UPDATE [Location] SET " +
+    private static final String UPDATE_LOCATION_SQL = "UPDATE [Location] SET " +
         "latitude = ? , " +
         "longitude = ? " +
         "WHERE id = ? ";
@@ -77,7 +77,7 @@ public class LocationDAO implements GenericDAO<LocationModel> {
         try {
 
             conn = Connector.getInstance();
-            ps = conn.prepareStatement(UPDATE_USER_SQL);
+            ps = conn.prepareStatement(UPDATE_LOCATION_SQL);
             
             ps.setDouble(1, model.getLatitude());
             ps.setDouble(2, model.getLongitude());
@@ -158,7 +158,7 @@ public class LocationDAO implements GenericDAO<LocationModel> {
     public List<LocationModel> readAll() throws SQLException {
         Connection conn = null;
         Statement stmt = null;
-        List<LocationModel> users = new ArrayList<LocationModel>();
+        List<LocationModel> locations = new ArrayList<LocationModel>();
 
         try {
             conn = Connector.getInstance();
@@ -168,10 +168,10 @@ public class LocationDAO implements GenericDAO<LocationModel> {
             ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
 
             while (rs.next()) {
-                users.add(convertToModel(rs));
+                locations.add(convertToModel(rs));
             }
 
-            return users;
+            return locations;
         } finally {
             if (stmt != null) {
                 stmt.close();

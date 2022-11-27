@@ -7,6 +7,7 @@ import com.carona.DAO.PostDAO;
 import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
+import com.carona.filters.PostFilter;
 import com.carona.models.PostModel;
 
 public class PostService {
@@ -74,6 +75,10 @@ public class PostService {
         if (post.getAvailableSeats() == null) {
             throw new BlankFieldsException("Número de vagas do post não especificado.");
         }
+    }
+
+    public List<PostModel> readByAdvancedFilter(PostFilter postFilter) throws SQLException {
+        return postDAO.readByAdvancedFilter(postFilter);
     }
 }
 

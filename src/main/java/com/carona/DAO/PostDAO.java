@@ -12,6 +12,7 @@ import java.util.List;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
 import com.carona.models.LocationModel;
+import com.carona.filters.PostFilter;
 import com.carona.models.AvailableWeekdaysModel;
 
 public class PostDAO implements GenericDAO<PostModel> {
@@ -19,7 +20,7 @@ public class PostDAO implements GenericDAO<PostModel> {
     private static final String SELECT_SQL = "SELECT * FROM [Post] WHERE id = ?";
     private static final String SELECT_ALL_SQL = "SELECT * FROM [Post]";
 
-    private static final String UPDATE_USER_SQL = "UPDATE [Post] SET " +
+    private static final String UPDATE_POST_SQL = "UPDATE [Post] SET " +
         "creator_id = ? , " +
         "title = ? , " +
         "description = ? , " +
@@ -106,7 +107,7 @@ public class PostDAO implements GenericDAO<PostModel> {
             locationDAO.update(model.getDestination());
             availableWeekdaysDAO.update(model.getAvailableWeekdays());
 
-            ps = conn.prepareStatement(UPDATE_USER_SQL);
+            ps = conn.prepareStatement(UPDATE_POST_SQL);
             
             ps.setString(1, model.getTitle());
             ps.setString(2, model.getCreator().getId());
@@ -193,7 +194,7 @@ public class PostDAO implements GenericDAO<PostModel> {
     public List<PostModel> readAll() throws SQLException {
         Connection conn = null;
         Statement stmt = null;
-        List<PostModel> users = new ArrayList<PostModel>();
+        List<PostModel> posts = new ArrayList<PostModel>();
 
         try {
             conn = Connector.getInstance();
@@ -203,10 +204,10 @@ public class PostDAO implements GenericDAO<PostModel> {
             ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
 
             while (rs.next()) {
-                users.add(convertToModel(rs));
+                posts.add(convertToModel(rs));
             }
 
-            return users;
+            return posts;
         } finally {
             if (stmt != null) {
                 stmt.close();
@@ -236,6 +237,77 @@ public class PostDAO implements GenericDAO<PostModel> {
                 availableWeekdays,
                 rs.getInt("available_seats"),
                 departureTime);
+    }
+
+    public List<PostModel> readByAdvancedFilter(PostFilter postFilter) throws SQLException {
+        Connection conn = null;
+        Statement stmt = null;
+        List<PostModel> posts = new ArrayList<PostModel>();
+
+        try {
+            conn = Connector.getInstance();
+
+            stmt = conn.createStatement();
+
+            String textFilter = postFilter.getDescriptionOrTitle();
+            String availableWeekDaysFilter = getAvailableWeekdaysFilter(postFilter.getAvailableWeekdaysModel());
+
+            String advanced_select = "SELECT p.* FROM [Post] p " +
+                "inner join [AvailableWeekdays] awd on p.available_weekdays = awd.id " +
+                "WHERE (title LIKE '%" +  textFilter + "%' " +
+                "OR description LIKE '%" + textFilter + "%') " +
+                "AND " + availableWeekDaysFilter;
+
+            
+            ResultSet rs = stmt.executeQuery(advanced_select);
+
+            while (rs.next()) {
+                posts.add(convertToModel(rs));
+            }
+
+            return posts;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+
+    private String getAvailableWeekdaysFilter(AvailableWeekdaysModel model) {
+        String strBuffer = "";
+        if (model.getSunday() == true) {
+            strBuffer += " sunday = 1 OR";
+        }
+        if (model.getMonday() == true) {
+            strBuffer += " monday = 1 OR";
+        }
+        if (model.getTuesday() == true) {
+            strBuffer += " tuesday = 1 OR";
+        }
+        if (model.getWednesday() == true) {
+            strBuffer += " wednesday = 1 OR";
+        }
+        if (model.getThursday() == true) {
+            strBuffer += " thursday = 1 OR";
+        }
+        if (model.getFriday() == true) {
+            strBuffer += " friday = 1 OR";
+        }
+        if (model.getSaturday() == true) {
+            strBuffer += " saturday = 1 OR";
+        }
+
+
+        if (strBuffer.length() == 0) {
+            strBuffer = "FALSE";
+        } else {
+            strBuffer = "(" + strBuffer.substring(0, strBuffer.length() - 3) + ")";
+        }
+        return strBuffer;
     }
 }
 

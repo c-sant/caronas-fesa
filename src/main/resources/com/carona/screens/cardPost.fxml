@@ -6,7 +6,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="119.0" prefWidth="202.0" styleClass="card" stylesheets="@../styles/styleBase.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="28.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Vagas" />
@@ -18,7 +17,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="52.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
       <Pane layoutX="81.0" layoutY="10.0" prefHeight="102.0" prefWidth="107.0">
          <children>
-            <Text layoutX="11.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Titulo" />
+            <Text fx:id="txtTitulo" layoutX="11.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Título" />
             <Text layoutX="9.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Horário" />
          </children>
       </Pane>

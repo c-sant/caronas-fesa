@@ -1,17 +1,23 @@
 package com.carona.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.carona.App;
+import com.carona.models.AvailableWeekdaysModel;
+import com.carona.models.LocationModel;
+import com.carona.filters.PostFilter;
 import com.carona.models.PostModel;
+import com.carona.services.PostService;
 
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -40,11 +46,56 @@ public class ScreenController {
     TextField txtLocale;
 
     @FXML
-    TextField txtDays;
+    CheckBox chkSeg;
+
+    @FXML
+    CheckBox chkTer;
+
+    @FXML
+    CheckBox chkQua;
+
+    @FXML
+    CheckBox chkQui;
+
+    @FXML
+    CheckBox chkSex;
+
+    @FXML
+    CheckBox chkSab;
+
+    @FXML
+    CheckBox chkDom;
+
+    @FXML
+    ImageView btnSearchPosts;
+
+    PostService postService = new PostService();
+
+    private void setDafaultFilters() {
+        txtSearch.setText("");
+        txtLocale.setText("");
+
+        fillCheckBox(chkSeg, true);
+        fillCheckBox(chkTer, true);
+        fillCheckBox(chkQua, true);
+        fillCheckBox(chkQui, true);
+        fillCheckBox(chkSex, true);
+        fillCheckBox(chkSab, true);
+        fillCheckBox(chkDom, true);
+    }
+
+    private void fillCheckBox(CheckBox checkBox, Boolean value) {
+        if (checkBox.isSelected() != value) {
+            checkBox.fire();
+        }
+    }
 
     @FXML
     public void initialize() throws IOException {
         panePrincipal.setVisible(false);
+        setDafaultFilters();
+        reloadPosts();
+
         // paneHeader.getChildren().add(App.loadFXML("mainHeaderScreen"));
     }
 
@@ -55,10 +106,8 @@ public class ScreenController {
         panePrincipal.getChildren().add(App.loadFXML("settingsScreen"));
     }
 
-    @FXML
-    private void onClickHome() throws IOException {
+    private void reloadPosts() throws IOException {
         panePrincipal.setVisible(true);
-        txtDays.setVisible(true);
         txtLocale.setVisible(true);
         txtSearch.setVisible(true);
         panePrincipal.getChildren().clear();
@@ -67,21 +116,61 @@ public class ScreenController {
         panePrincipal.getChildren().add(setDataInVBox());
     }
 
+    @FXML
+    private void onClickHome() throws IOException {
+        setDafaultFilters();
+        reloadPosts();
+    }
+
     private void resetPosition(){
         panePrincipal.setPrefHeight(339);
         panePrincipal.setLayoutY(83);
-        txtDays.setVisible(false);
         txtLocale.setVisible(false);
         txtSearch.setVisible(false);
     }
 
-    private List<PostModel> getDataPost(){
-        //Algum metodo service que ira buscar os posts;
-        return new ArrayList<PostModel>();
+    private void createFailToReadPostAlert() throws IOException {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Mensagem");
+        alert.setHeaderText("Falha no carregamento!");
+        alert.setContentText("Houve uma falha no carregamento dos posts. Tente novamente em instantes.");
+        alert.showAndWait();
     }
 
-    private ScrollPane setDataInVBox() throws IOException{
-        List<PostModel> postList = getDataPost();
+    private PostFilter formatPostFilter() {
+        AvailableWeekdaysModel model = new AvailableWeekdaysModel(
+            -1, chkDom.isSelected(), chkSeg.isSelected(), chkTer.isSelected(), chkQua.isSelected(), 
+            chkQui.isSelected(), chkSex.isSelected(), chkSab.isSelected()
+        );
+
+        LocationModel departure_place = new LocationModel(-1, 10.0, 10.0); // Preencher latitude e longitude conforme filtro feito
+
+        return new PostFilter(
+                txtSearch.getText(),
+                model,
+                departure_place
+        );
+    }
+
+    private List<PostModel> getPosts() throws IOException {
+        try {
+            PostFilter postFilter = formatPostFilter();
+            List<PostModel> posts = postService.readByAdvancedFilter(postFilter);
+
+            return posts;
+        } catch (SQLException ex) {
+            createFailToReadPostAlert();
+            return new ArrayList<PostModel>();
+        }
+    }
+
+    @FXML
+    private void onClickSearchPosts() throws IOException {
+        reloadPosts();
+    }
+
+    private ScrollPane setDataInVBox() throws IOException {
+        List<PostModel> postList = getPosts();
         
         ScrollPane sPane = new ScrollPane();
         sPane.setPrefHeight(270);
@@ -96,10 +185,7 @@ public class ScreenController {
         for(PostModel post : postList){
             cards.getChildren().add(App.loadFXML("cardPost", post));
         }
-        cards.getChildren().add(App.loadFXML("cardPost"));
-        cards.getChildren().add(App.loadFXML("cardPost"));
-        cards.getChildren().add(App.loadFXML("cardPost"));
-        cards.getChildren().add(App.loadFXML("cardPost"));
+        
         sPane.setContent(cards);
 
         return sPane;
