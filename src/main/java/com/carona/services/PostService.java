@@ -103,7 +103,7 @@ public class PostService {
 
     public String getLatAndLon(String parameter) throws MalformedURLException, IOException{
         String encodedSearch = URLEncoder.encode(parameter, "utf-8");
-        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+ encodedSearch + "&apiKey=72153e202e824dc6afa201e03851dac8");
+        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+ encodedSearch + "&lang=pt&limit=1&type=city&filter=countrycode:br&apiKey=72153e202e824dc6afa201e03851dac8");
         HttpURLConnection http = (HttpURLConnection)url.openConnection();
         http.setRequestProperty("Accept", "application/json");
 
@@ -120,7 +120,7 @@ public class PostService {
         http.disconnect();
         
         Integer indexGeometry = response.toString().indexOf("coordinates");
-        Integer indexBbox = response.toString().indexOf("properties");
+        Integer indexBbox = response.toString().indexOf("bbox");
         
         return response.toString().substring(indexGeometry + 14, indexBbox - 4);
     }

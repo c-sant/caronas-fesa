@@ -25,6 +25,7 @@ import com.carona.services.NotificationConfigService;
 import com.carona.services.NotificationService;
 import com.carona.services.PostService;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
@@ -39,7 +40,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class ScreenController {
+public class ScreenController{
 
     @FXML
     Pane panePrincipal;
@@ -140,7 +141,6 @@ public class ScreenController {
         setNotificationCount();
         setDefaultFilters();
         reloadPosts();
-
         // paneHeader.getChildren().add(App.loadFXML("mainHeaderScreen"));
     }
 
@@ -325,5 +325,5 @@ public class ScreenController {
         sPane.setDisable(context);
     }
 
-   
+    
 }
