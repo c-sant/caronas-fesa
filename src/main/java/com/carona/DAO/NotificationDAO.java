@@ -9,170 +9,61 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.carona.filters.AvailableWeekdaysFilter;
+import com.carona.filters.LocationFilter;
 import com.carona.models.NotificationModel;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
 
-public class NotificationDAO implements GenericDAO<NotificationModel> {
-    private static final String SELECT_SQL = "SELECT * FROM [Notification] WHERE id = ?";
-    private static final String SELECT_ALL_SQL = "SELECT * FROM [Notification]";
+public class NotificationDAO {
+    private static final String INSERT_SQL = "INSERT INTO Notification(viewed, subscriber, post, notification_time) " +
+    "SELECT ?, u.id, ?, ? " + 
+    "FROM [User] u " +
+    "INNER JOIN [NotificationConfig] n ON u.id = n.user_id " +
+    "INNER JOIN [Location] l ON n.place_of_departure = l.id " +
+    "INNER JOIN [AvailableWeekdays] awd ON n.available_weekdays = awd.id " +
+    "WHERE " +
+        "(n.receive_notification = 1) " +
+        "AND " +
+        "(l.latitude between ? and ? and l.longitude between ? and ?) " +
+        "AND " +
+        " ? " +
+        "AND " +
+        "( ? BETWEEN n.initial_departure_time and n.final_departure_time)";
 
-    private static final String UPDATE_LOCATION_SQL = "UPDATE [Notification] SET " +
-        "viewed = ? , " +
-        "subscriber = ? , " +
-        "post = ? , " +
-        "notification_time = ? " +
-        "WHERE id = ? ";
-
-    private static final String DELETE_SQL = "DELETE FROM [Notification] WHERE id = ?";
-
-    private static final String INSERT_SQL = "INSERT INTO [Notification] VALUES (?, ?, ?, ?, ?)";
-
-    @Override
-    public void insert(NotificationModel model) throws SQLException {
+    public void createMultipleNotifications(PostModel post) throws SQLException {
         Connection conn = null;
         PreparedStatement ps = null;
 
         try {
             conn = Connector.getInstance();
-
             ps = conn.prepareStatement(INSERT_SQL);
 
-            model.setId(getNextId(conn));
-            ps.setInt(1, model.getId());
-            ps.setBoolean(2, model.getViewed());
-            ps.setString(3, model.getSubscriber().getId());
-            ps.setInt(4, model.getPost().getId());
-            ps.setString(5, model.getNotificationTime().toString());
+            // Campos default para preenchimento de notificação
+            ps.setBoolean(1, false);
+            ps.setInt(2, post.getId());
+            ps.setString(3, LocalDateTime.now().toString());
 
-            ps.executeUpdate();
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }
-
-    private int getNextId(Connection conn) throws SQLException {
-        PreparedStatement ps = null;
-        try {
-            ps = conn.prepareStatement("SELECT MAX(id) + 1 as next_id FROM [Notification]");
-            ResultSet result = ps.executeQuery();
+            // Filtro de distância do local de partida
+            Double lat = post.getPlaceOfDeparture().getLatitude();
+            ps.setString(4, lat.toString() + " - (max_distance_in_km / 111.0)");
+            ps.setString(5, lat.toString() + " + (max_distance_in_km / 111.0)");
     
-            return result.getInt("next_id");
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-        }
-    }
+            Double lon = post.getPlaceOfDeparture().getLongitude();
+            ps.setString(6, lon.toString() + " - (max_distance_in_km / 85.0)");
+            ps.setString(7, lon.toString() + " + (max_distance_in_km / 85.0)");
 
-    @Override
-    public void update(NotificationModel model) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
+            // Filtro para dias da semana disponíveis
+            AvailableWeekdaysFilter availableWeekdaysFilter = new AvailableWeekdaysFilter(post.getAvailableWeekdays());
+            ps.setString(8, availableWeekdaysFilter.generateSqlFilter());
 
-        try {
-
-            conn = Connector.getInstance();
-            ps = conn.prepareStatement(UPDATE_LOCATION_SQL);
-            
-            ps.setBoolean(1, model.getViewed());
-            ps.setString(2, model.getSubscriber().getId());
-            ps.setInt(3, model.getPost().getId());
-            ps.setString(4, model.getNotificationTime().toString());
-            ps.setInt(5, model.getId());
-
-            ps.executeUpdate();
-
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }
-
-    @Override
-    public void remove(NotificationModel model) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            conn = Connector.getInstance();
-            ps = conn.prepareStatement(DELETE_SQL);
-
-            ps.setInt(1, model.getId());
+            // Filtro para horário de viagem compatível
+            ps.setString(9, post.getDepartureTime().toString());
 
             ps.executeUpdate();
         } finally {
             if (ps != null) {
                 ps.close();
-            }
-
-            if (conn != null) {
-                conn.close();
-            }
-        }
-
-    }
-
-    @Override
-    public NotificationModel readById(NotificationModel model) throws SQLException {
-        Connection conn = null;
-        PreparedStatement ps = null;
-
-        try {
-            conn = Connector.getInstance();
-            ps = conn.prepareStatement(SELECT_SQL);
-
-            ps.setInt(1, model.getId());
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return convertToModel(rs);
-            }
-
-            return null;
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }
-
-    @Override
-    public List<NotificationModel> readAll() throws SQLException {
-        Connection conn = null;
-        Statement stmt = null;
-        List<NotificationModel> models = new ArrayList<NotificationModel>();
-
-        try {
-            conn = Connector.getInstance();
-
-            stmt = conn.createStatement();
-
-            ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
-
-            while (rs.next()) {
-                models.add(convertToModel(rs));
-            }
-
-            return models;
-        } finally {
-            if (stmt != null) {
-                stmt.close();
             }
 
             if (conn != null) {

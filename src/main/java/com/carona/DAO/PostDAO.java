@@ -49,12 +49,12 @@ public class PostDAO implements GenericDAO<PostModel> {
         PreparedStatement ps = null;
 
         try {
-            conn = Connector.getInstance();
             
             locationDAO.insert(model.getPlaceOfDeparture());
             locationDAO.insert(model.getDestination());
             availableWeekdaysDAO.insert(model.getAvailableWeekdays());
-
+            
+            conn = Connector.getInstance();
             ps = conn.prepareStatement(INSERT_SQL);
 
             model.setId(getNextId(conn));

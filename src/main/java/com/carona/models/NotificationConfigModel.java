@@ -10,10 +10,12 @@ public class NotificationConfigModel extends AbstractModel<Integer> {
         this.id = id;
     }
 
-    public NotificationConfigModel(Integer id, Boolean receiveNotification, LocationModel placeOfDeparture,
+    public NotificationConfigModel(Integer id, UserModel userModel, Boolean receiveNotification, LocationModel placeOfDeparture, Double maxDistenceInKm,
     AvailableWeekdaysModel availableWeekdays, LocalTime initialDepartureTime, LocalTime finalDepartureTime) {
         this.id = id;
+        this.userModel = userModel;
         this.receiveNotification = receiveNotification;
+        this.maxDistanceInKm = maxDistenceInKm;
         this.placeOfDeparture = placeOfDeparture;
         this.availableWeekdays = availableWeekdays;
         this.initialDepartureTime = initialDepartureTime;
@@ -22,9 +24,27 @@ public class NotificationConfigModel extends AbstractModel<Integer> {
 
     private Boolean receiveNotification;
     private LocationModel placeOfDeparture;
+    private Double maxDistanceInKm;
     private AvailableWeekdaysModel availableWeekdays;
     private LocalTime initialDepartureTime;
     private LocalTime finalDepartureTime;
+    private UserModel userModel;
+
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    public Double getMaxDistanceInKm() {
+        return maxDistanceInKm;
+    }
+
+    public void setMaxDistanceInKm(Double maxDistanceInKm) {
+        this.maxDistanceInKm = maxDistanceInKm;
+    }
 
     public Boolean getReceiveNotification() {
         return receiveNotification;

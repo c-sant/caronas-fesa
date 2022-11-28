@@ -2,17 +2,25 @@ package com.carona.controllers;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.carona.App;
+import com.carona.DAO.NotificationDAO;
+import com.carona.exceptions.BlankFieldsException;
+import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.LocationModel;
+import com.carona.models.NotificationConfigModel;
 import com.carona.models.NotificationModel;
 import com.carona.filters.AvailableWeekdaysFilter;
 import com.carona.filters.LocationFilter;
 import com.carona.filters.PostFilter;
 import com.carona.models.PostModel;
+import com.carona.models.UserModel;
+import com.carona.services.NotificationConfigService;
 import com.carona.services.NotificationService;
 import com.carona.services.PostService;
 
@@ -144,7 +152,22 @@ public class ScreenController {
     }
 
     @FXML
-    private void onClickHome() throws IOException {
+    private void onClickHome() throws IOException, SQLException, BlankFieldsException, EntityAlreadyExistsException {
+        PostService postService = new PostService();
+        postService.create(
+            new PostModel(
+                    -1,
+                    App.getUser(), 
+                    "Título do post teste", 
+                    "Descrição do post teste", 
+                    new LocationModel(-1, 10.0, 10.0),
+                    new LocationModel(-1, 10.00001, 10.00001),
+                    new AvailableWeekdaysModel(-1, true, true, true, true, true, true, true), 
+                    2,
+                    LocalTime.now(), LocalDateTime.now()
+                )
+            );
+
         setDafaultFilters();
         reloadPosts();
         setNotificationCount();

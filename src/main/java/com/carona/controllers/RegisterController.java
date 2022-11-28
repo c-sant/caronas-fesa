@@ -108,8 +108,7 @@ public class RegisterController {
                 txtDescription.getText(),
                 Course.fromInteger(courseStrInt.get(cboCourse.getValue())),
                 txtPhoneNumber.getText(),
-                txtPassword.getText(),
-                null
+                txtPassword.getText()
                 );
 
         try {

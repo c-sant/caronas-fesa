@@ -11,7 +11,7 @@ public class PostModel extends AbstractModel<Integer> {
     public PostModel(Integer id) {
         this.id = id;
     }
-
+    
     public PostModel(Integer id, UserModel creator, String title, String description, LocationModel placeOfDeparture,
             LocationModel destination, AvailableWeekdaysModel availableWeekdays, Integer availableSeats,
             LocalTime departureTime, LocalDateTime createdTime) {

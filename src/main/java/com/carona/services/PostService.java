@@ -3,6 +3,7 @@ package com.carona.services;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.carona.DAO.NotificationDAO;
 import com.carona.DAO.PostDAO;
 import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
@@ -12,9 +13,11 @@ import com.carona.models.PostModel;
 
 public class PostService {
     PostDAO postDAO = new PostDAO();
+    NotificationDAO notificationDAO = new NotificationDAO();
 
     public void create(PostModel post) throws BlankFieldsException, EntityAlreadyExistsException, SQLException {
         Boolean postExists = postDAO.readById(post) != null;
+
 
         if (postExists) {
             throw new EntityAlreadyExistsException("Post já existe com id " + post.getId()); 
@@ -22,6 +25,12 @@ public class PostService {
 
         validatePost(post);
         postDAO.insert(post);
+
+        notifySubscribers(post);
+    }
+
+    private void notifySubscribers(PostModel post) throws SQLException {
+        notificationDAO.createMultipleNotifications(post);
     }
 
     public void update(PostModel post) throws SQLException, EntityDoesNotExistException, BlankFieldsException  {
