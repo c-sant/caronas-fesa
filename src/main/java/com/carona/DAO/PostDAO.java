@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class PostDAO implements GenericDAO<PostModel> {
 
     private static final String DELETE_SQL = "DELETE FROM [Post] WHERE id = ?";
 
-    private static final String INSERT_SQL = "INSERT INTO [Post] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_SQL = "INSERT INTO [Post] VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private LocationDAO locationDAO = new LocationDAO();
     private AvailableWeekdaysDAO availableWeekdaysDAO = new AvailableWeekdaysDAO();
@@ -66,6 +67,7 @@ public class PostDAO implements GenericDAO<PostModel> {
             ps.setInt(7, model.getAvailableWeekdays().getId());
             ps.setInt(8, model.getAvailableSeats());
             ps.setString(9, model.getDepartureTime().toString());
+            ps.setString(10, model.getCreatedTime().toString());
     
 
             ps.executeUpdate();
@@ -226,6 +228,7 @@ public class PostDAO implements GenericDAO<PostModel> {
         UserModel creator = new UserModel(rs.getString("creator_id"));
 
         LocalTime departureTime = LocalTime.parse(rs.getString("departure_time"));
+        LocalDateTime createdTime = LocalDateTime.parse(rs.getString("created_time"));
 
         return new PostModel(
                 rs.getInt("id"),
@@ -236,7 +239,9 @@ public class PostDAO implements GenericDAO<PostModel> {
                 destination,
                 availableWeekdays,
                 rs.getInt("available_seats"),
-                departureTime);
+                departureTime,
+                createdTime
+                );
     }
 
     public List<PostModel> readByAdvancedFilter(PostFilter postFilter) throws SQLException {

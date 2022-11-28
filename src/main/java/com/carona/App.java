@@ -9,13 +9,20 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
+import com.carona.DAO.UserDAO;
 import com.carona.controllers.CardPostController;
 import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
+import com.carona.models.AvailableWeekdaysModel;
+import com.carona.models.Course;
+import com.carona.models.LocationModel;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
+import com.carona.services.PostService;
 
 /**
  * JavaFX App
@@ -38,7 +45,7 @@ public class App extends Application {
         // UserDAO userDAO = new UserDAO();
         // UserModel user = userDAO.readById("081200007");
         // if (user == null) {
-        //     user = new UserModel("081200007", "Guilherme", "Alguma coisa sobre mim", Course.ComputerEngineering, "(11) 98741-0155", "12345678");
+        //     user = new UserModel("081200007", "Guilherme", "Alguma coisa sobre mim", Course.ComputerEngineering, "(11) 98741-0155", "12345678", null);
         //     userDAO.insert(user);   
         // }
     
@@ -53,7 +60,8 @@ public class App extends Application {
         //         new LocationModel(-1, 30.3, 40.3),
         //         new AvailableWeekdaysModel(-1, false, false, true, true, false, true, false),
         //         3, 
-        //         LocalTime.now()
+        //         LocalTime.now(),
+        //         LocalDateTime.now()
         //     );
 
         // PostService service = new PostService();

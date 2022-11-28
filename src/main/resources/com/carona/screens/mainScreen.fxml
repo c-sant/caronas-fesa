@@ -51,12 +51,12 @@
                         <Image url="@../imgs/add-icon.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="23.0" fitWidth="36.0" layoutX="215.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="23.0" fitWidth="36.0" layoutX="215.0" layoutY="15.0" onMouseClicked="#onNotificationsClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/notification-icon.png" />
                      </image>
                   </ImageView>
-                  <Text fx:id="txtNotifications" fill="RED" layoutX="228.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                  <Text fx:id="txtNotifications" fill="RED" layoutX="228.0" layoutY="26.0" onMouseClicked="#onNotificationsClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                      <font>
                         <Font size="22.0" />
                      </font>

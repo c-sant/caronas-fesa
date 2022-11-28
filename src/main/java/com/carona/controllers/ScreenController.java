@@ -8,6 +8,7 @@ import java.util.List;
 import com.carona.App;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.LocationModel;
+import com.carona.models.NotificationModel;
 import com.carona.filters.AvailableWeekdaysFilter;
 import com.carona.filters.LocationFilter;
 import com.carona.filters.PostFilter;
@@ -164,13 +165,38 @@ public class ScreenController {
         alert.showAndWait();
     }
 
+    @FXML
+    private void onNotificationsClicked()  {
+        try {
+            // Altera a visualização das recomendações, além de marcar as notificações como visto
+            if (txtNotifications.getText() != "0") {
+                notificationService.setUserNotificationsViewed(App.getUser());
+                txtNotifications.setText("0");
+            }
+
+            // Captura as notificações
+            List<NotificationModel> notifications = notificationService.readUserNotifications(App.getUser());
+
+            // Faz a lógica necessária. Provavelmente dar um get em post por Id, pois ele não traz de forma automática.
+            for (NotificationModel notificationModel : notifications) {
+                System.out.println("Id da notificação = " + notificationModel.getId());
+                System.out.println("Id do Post = " + notificationModel.getPost().getId());
+                System.out.println("Data de criação = " + notificationModel.getNotificationTime());
+                System.out.println("---------------------------------------");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Falha removendo notificações vistas");
+        }
+    }
+
     private PostFilter formatPostFilter() {
         AvailableWeekdaysModel availableWeekdaysModel = new AvailableWeekdaysModel(
             -1, chkDom.isSelected(), chkSeg.isSelected(), chkTer.isSelected(), chkQua.isSelected(), 
             chkQui.isSelected(), chkSex.isSelected(), chkSab.isSelected()
         );
 
-        LocationModel departure_place = new LocationModel(-1, 2.3, 20.2); // Preencher latitude e longitude conforme filtro feito
+        LocationModel departure_place = new LocationModel(-1, 10.0, 10.001); // Preencher latitude e longitude conforme filtro feito
 
         return new PostFilter(
                 txtSearch.getText(),

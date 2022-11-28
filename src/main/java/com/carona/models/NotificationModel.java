@@ -1,6 +1,6 @@
 package com.carona.models;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class NotificationModel extends AbstractModel<Integer> {
 
@@ -11,7 +11,7 @@ public class NotificationModel extends AbstractModel<Integer> {
         this.id = id;
     }
 
-    public NotificationModel(Integer id, UserModel subscriber, PostModel post, Boolean viewed, LocalTime notificationTime) {
+    public NotificationModel(Integer id, UserModel subscriber, PostModel post, Boolean viewed, LocalDateTime notificationTime) {
         this.id = id;
         this.subscriber = subscriber;
         this.post = post;
@@ -22,13 +22,13 @@ public class NotificationModel extends AbstractModel<Integer> {
     private UserModel subscriber;
     private PostModel post;
     private Boolean viewed;
-    private LocalTime notificationTime;
+    private LocalDateTime notificationTime;
 
-    public LocalTime getNotificationTime() {
+    public LocalDateTime getNotificationTime() {
         return notificationTime;
     }
 
-    public void setNotificationTime(LocalTime notificationTime) {
+    public void setNotificationTime(LocalDateTime notificationTime) {
         this.notificationTime = notificationTime;
     }
 

@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -183,15 +183,17 @@ public class NotificationDAO implements GenericDAO<NotificationModel> {
 
     public List<NotificationModel> readByUser(UserModel user) throws SQLException {
         Connection conn = null;
-        Statement stmt = null;
+        PreparedStatement ps = null;
         List<NotificationModel> models = new ArrayList<NotificationModel>();
 
         try {
             conn = Connector.getInstance();
 
-            stmt = conn.createStatement();
+            ps = conn.prepareStatement("SELECT * FROM [Notification] WHERE subscriber = ?");
 
-            ResultSet rs = stmt.executeQuery("SELECT * FROM [Notification] WHERE subscriber = " + user.getId());
+            ps.setString(1, user.getId());
+
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 models.add(convertToModel(rs));
@@ -199,8 +201,8 @@ public class NotificationDAO implements GenericDAO<NotificationModel> {
 
             return models;
         } finally {
-            if (stmt != null) {
-                stmt.close();
+            if (ps != null) {
+                ps.close();
             }
 
             if (conn != null) {
@@ -218,7 +220,7 @@ public class NotificationDAO implements GenericDAO<NotificationModel> {
 
             stmt = conn.createStatement();
 
-            ResultSet rs = stmt.executeQuery("SELECT COUNT(1) as unread_notifications FROM [Notification] WHERE subscriber = " + user.getId() + " AND viewed = 0");
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(1) as unread_notifications FROM [Notification] WHERE subscriber = '" + user.getId() + "' AND viewed = 0");
 
             while (rs.next()) {
                 return rs.getInt("unread_notifications");
@@ -262,7 +264,7 @@ public class NotificationDAO implements GenericDAO<NotificationModel> {
     }
 
     protected NotificationModel convertToModel(ResultSet rs) throws SQLException {
-        LocalTime notificationTime = LocalTime.parse(rs.getString("notification_time"));   
+        LocalDateTime notificationTime = LocalDateTime.parse(rs.getString("notification_time"));   
         
         return new NotificationModel(
                 rs.getInt("id"),
