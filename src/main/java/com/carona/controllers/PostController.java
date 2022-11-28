@@ -1,6 +1,8 @@
 package com.carona.controllers;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -8,6 +10,10 @@ import java.util.Optional;
 import com.carona.App;
 import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.InvalidSelectionDaysException;
+import com.carona.models.AvailableWeekdaysModel;
+import com.carona.models.LocationModel;
+import com.carona.models.PostModel;
+import com.carona.services.PostService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -95,20 +101,38 @@ public class PostController {
     private void onCreatePost() throws IOException, BlankFieldsException, InvalidSelectionDaysException {
         Boolean hasError = false;
         String message = "";
-        try{
-            verifyFields();
-        }catch(BlankFieldsException err){
-            hasError = true;
-            message = "Ainda existe campos obrigatórios não preenchidos";
-        }catch(InvalidSelectionDaysException err){
-            hasError = true;
-            message = "Pelo menos um dia deve ser selecionado";
-        }
+        // try{
+        //     verifyFields();
+        // }catch(BlankFieldsException err){
+        //     hasError = true;
+        //     message = "Ainda existe campos obrigatórios não preenchidos";
+        // }catch(InvalidSelectionDaysException err){
+        //     hasError = true;
+        //     message = "Pelo menos um dia deve ser selecionado";
+        // }
 
-        if (hasError) {
-            createAlert(hasError, message);
-            return;
-        }
+        // if (hasError) {
+        //     createAlert(hasError, message);
+        //     return;
+        // }
+        
+        // PostModel model = new PostModel(
+        //         -1, 
+        //         App.getUser(),
+        //         txtTitle.getText(), 
+        //         txtDescription.getText(), 
+        //         new LocationModel(-1, 10.1, 20.2),
+        //         new LocationModel(-1, 30.3, 40.3),
+        //         new AvailableWeekdaysModel(-1,false, checkDaysMap.get("chkMonday"), checkDaysMap.get("chkTuesday"), checkDaysMap.get("chkWednesday"), 
+        //         checkDaysMap.get("chkThursday"), checkDaysMap.get("chkFriday"), checkDaysMap.get("chkSaturday")),
+        //         Integer.valueOf(txtNumbersOfPeople.getText()), 
+        //         LocalTime.parse(txtDepartureHour.getText()),
+        //         LocalDateTime.now()
+        //     );
+
+        PostService service = new PostService();
+        service.requestLatAndLon();
+        // service.create(model);
     }
 
     private Boolean verifyFields() throws BlankFieldsException, InvalidSelectionDaysException{

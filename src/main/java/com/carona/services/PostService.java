@@ -1,5 +1,8 @@
 package com.carona.services;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -89,5 +92,12 @@ public class PostService {
     public List<PostModel> readByAdvancedFilter(PostFilter postFilter) throws SQLException {
         return postDAO.readByAdvancedFilter(postFilter);
     }
+
+    public void requestLatAndLon() throws MalformedURLException, IOException, UnsupportedEncodingException{
+    }
+
+   
+
+ 
 }
 

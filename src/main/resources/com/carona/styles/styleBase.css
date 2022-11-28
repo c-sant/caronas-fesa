@@ -33,11 +33,13 @@
 #Register{
     -fx-background-color:  #0d3ab0;
     -fx-text-fill:  white;
+    -fx-cursor: hand;
 }
 
 #cancelExclude{
     -fx-background-color:  rgba(46, 80, 196, 0.5);
     -fx-text-fill:  white;
+    -fx-cursor: hand;
 }
 
 
@@ -122,3 +124,23 @@
 }
 
 
+.message-box-days{
+    -fx-background-radius: 10;
+    -fx-background-color: #0d3ab0;
+}
+
+.confirm-popup{
+    
+    -fx-fill:  black !important;
+    -fx-text-fill:   black !important;
+    -fx-background-color:  #aab0e7 !important;
+    -fx-background-radius: 10;
+}
+
+#input-popup{
+    -fx-background-color:  #aab0e7 !important;
+}
+
+#disable{
+    -fx-background-color: rgba(85, 85, 85, 0.5);
+}

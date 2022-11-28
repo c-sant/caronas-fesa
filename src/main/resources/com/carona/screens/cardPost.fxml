@@ -9,16 +9,16 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="119.0" prefWidth="202.0" styleClass="card" stylesheets="@../styles/styleBase.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text layoutX="28.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Vagas" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="26.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="26.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="39.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="39.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="52.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="52.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec1" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="26.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec2" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="26.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec3" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="39.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec4" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="39.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec6" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="52.0" layoutY="99.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
+      <Rectangle fx:id="rec5" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="10.0" layoutX="52.0" layoutY="86.0" stroke="BLACK" strokeType="INSIDE" width="10.0" />
       <Pane layoutX="81.0" layoutY="10.0" prefHeight="102.0" prefWidth="107.0">
          <children>
-            <Text fx:id="txtTitulo" layoutX="11.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Título" />
-            <Text layoutX="9.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Horário" />
+            <Text fx:id="txtTitle" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Título" wrappingWidth="100.0" />
+            <Text fx:id="txtHour" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Horário" />
          </children>
       </Pane>
       <ImageView fitHeight="37.0" fitWidth="40.0" layoutX="25.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

@@ -25,7 +25,9 @@ import com.carona.services.NotificationService;
 import com.carona.services.PostService;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -33,6 +35,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class ScreenController {
@@ -44,6 +47,12 @@ public class ScreenController {
     Pane paneHeader;
 
     @FXML
+    Pane panePopUp;
+
+    @FXML
+    Pane paneDisable;
+
+    @FXML
     ImageView btnHome;
 
     @FXML
@@ -51,6 +60,9 @@ public class ScreenController {
 
     @FXML
     ImageView btnAddPost;
+
+    @FXML
+    ImageView btnUser;
 
     @FXML
     Text txtNotifications;
@@ -88,12 +100,19 @@ public class ScreenController {
     @FXML
     ImageView btnSearchPosts;
 
+    @FXML
+    Button btnFilterAdvanced;
+
+    @FXML
+    Button btnConfirmFilter;
+
     PostService postService = new PostService();
     NotificationService notificationService = new NotificationService();
 
-    private void setDafaultFilters() {
+    private void setDefaultFilters() {
         txtSearch.setText("");
         txtLocale.setText("");
+        txtDistancia.setText("10");
 
         fillCheckBox(chkSeg, true);
         fillCheckBox(chkTer, true);
@@ -115,9 +134,10 @@ public class ScreenController {
     @FXML
     public void initialize() throws IOException {
         panePrincipal.setVisible(false);
-
+        panePopUp.setVisible(false);
+        paneDisable.setVisible(false);
         setNotificationCount();
-        setDafaultFilters();
+        setDefaultFilters();
         reloadPosts();
 
         // paneHeader.getChildren().add(App.loadFXML("mainHeaderScreen"));
@@ -145,6 +165,7 @@ public class ScreenController {
         panePrincipal.setVisible(true);
         txtLocale.setVisible(true);
         txtSearch.setVisible(true);
+        btnFilterAdvanced.setVisible(true);
         panePrincipal.getChildren().clear();
         panePrincipal.setPrefHeight(270);
         panePrincipal.setLayoutY(150);
@@ -153,22 +174,24 @@ public class ScreenController {
 
     @FXML
     private void onClickHome() throws IOException, SQLException, BlankFieldsException, EntityAlreadyExistsException {
-        PostService postService = new PostService();
-        postService.create(
-            new PostModel(
-                    -1,
-                    App.getUser(), 
-                    "Título do post teste", 
-                    "Descrição do post teste", 
-                    new LocationModel(-1, 10.0, 10.0),
-                    new LocationModel(-1, 10.00001, 10.00001),
-                    new AvailableWeekdaysModel(-1, true, true, true, true, true, true, true), 
-                    2,
-                    LocalTime.now(), LocalDateTime.now()
-                )
-            );
+    //     PostService postService = new PostService();
+    //     postService.create(
+    //         new PostModel(
+    //                 -1,
+    //                 App.getUser(), 
+    //                 "Título do post teste", 
+    //                 "Descrição do post teste", 
+    //                 new LocationModel(-1, 10.0, 10.0),
+    //                 new LocationModel(-1, 10.00001, 10.00001),
+    //                 new AvailableWeekdaysModel(-1, true, true, true, true, true, true, true), 
+    //                 2,
+    //                 LocalTime.now(), LocalDateTime.now()
+    //             )
+    //         );
 
-        setDafaultFilters();
+    //     setDafaultFilters();
+    // private void onClickHome() throws IOException {
+        setDefaultFilters();
         reloadPosts();
         setNotificationCount();
     }
@@ -178,6 +201,7 @@ public class ScreenController {
         panePrincipal.setLayoutY(83);
         txtLocale.setVisible(false);
         txtSearch.setVisible(false);
+        btnFilterAdvanced.setVisible(false);
     }
 
     private void createFailToReadPostAlert() throws IOException {
@@ -252,6 +276,7 @@ public class ScreenController {
         ScrollPane sPane = new ScrollPane();
         sPane.setPrefHeight(270);
         sPane.setPrefWidth(247.0);
+        sPane.setId("paneCards");
 
         VBox cards = new VBox();
         cards.setPrefHeight(270);
@@ -283,4 +308,26 @@ public class ScreenController {
         panePrincipal.getChildren().add(App.loadFXML("postScreen"));
     }
  
+    @FXML
+    private void onClickFilterAdvanced() throws IOException{
+        setDisableInComponents(true);
+    }
+
+    @FXML
+    private void onClickFilterConfirm() throws IOException{
+        setDisableInComponents(false);
+    }
+
+    private void setDisableInComponents(Boolean context){
+        panePopUp.setVisible(context);
+        paneDisable.setVisible(context);
+        btnHome.setDisable(context);
+        btnSettings.setDisable(context);
+        btnAddPost.setDisable(context);
+        btnUser.setDisable(context);
+        ScrollPane sPane = (ScrollPane) App.getNode("#paneCards");
+        sPane.setDisable(context);
+    }
+
+   
 }

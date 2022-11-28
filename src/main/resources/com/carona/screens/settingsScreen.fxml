@@ -6,125 +6,94 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="247.0" style="-fx-background-color: #aab0e7; -fx-border-color: #aab0e7;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane prefHeight="339.0" prefWidth="247.0" style="-fx-border-color: #aab0e7; -fx-background-color: #aab0e7;">
          <content>
-            <Pane prefHeight="587.0" prefWidth="230.0" style="-fx-background-color: #aab0e7;">
+            <Pane prefHeight="405.0" prefWidth="230.0" style="-fx-background-color: #aab0e7;">
                <children>
-                  <TextField layoutX="15.0" layoutY="30.0" prefHeight="25.0" prefWidth="185.0" promptText="Nome" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white; -fx-text-fill: white;">
+                  <TextField editable="false" layoutX="19.0" layoutY="22.0" prefHeight="23.0" prefWidth="124.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Receber Notificação">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="15.0" layoutY="73.0" prefHeight="25.0" prefWidth="106.0" promptText="(11) 00000-0000" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
+                  <TextField editable="false" layoutX="22.0" layoutY="56.0" prefHeight="25.0" prefWidth="38.0" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-text-fill: white;" text="Sim">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="118.0" prefHeight="0.0" prefWidth="76.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Período">
+                  <TextField editable="false" layoutX="72.0" layoutY="56.0" prefHeight="25.0" prefWidth="39.0" style="-fx-background-radius: 20; -fx-background-color: #707ceb; -fx-text-fill: white;" text="Não">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="158.0" prefHeight="25.0" prefWidth="56.0" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-text-fill: white;" text="Diurno">
+                  <TextField layoutX="19.0" layoutY="94.0" prefHeight="25.0" prefWidth="206.0" promptText="Local de Partida Desejado" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="79.0" layoutY="158.0" prefHeight="25.0" prefWidth="75.0" style="-fx-background-radius: 20; -fx-background-color: #707ceb; -fx-text-fill: white;" text="Vespertino">
+                  <TextField editable="false" layoutX="15.0" layoutY="133.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Distãncia Máxima (m)">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="161.0" layoutY="158.0" prefHeight="25.0" prefWidth="58.0" style="-fx-background-radius: 20; -fx-background-color: #707ceb; -fx-text-fill: white;" text="Noturno">
+                  <TextField layoutX="19.0" layoutY="167.0" prefHeight="25.0" prefWidth="45.0" promptText="0000" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="205.0" prefHeight="23.0" prefWidth="124.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Receber Notificação">
+                  <TextField editable="false" layoutX="15.0" layoutY="203.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Dia da Semana">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="237.0" prefHeight="25.0" prefWidth="38.0" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-text-fill: white;" text="Sim">
+                  <TextField editable="false" layoutX="16.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="65.0" layoutY="237.0" prefHeight="25.0" prefWidth="39.0" style="-fx-background-radius: 20; -fx-background-color: #707ceb; -fx-text-fill: white;" text="Não">
+                  <TextField editable="false" layoutX="48.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="T">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="15.0" layoutY="283.0" prefHeight="25.0" prefWidth="206.0" promptText="Local de Partida Desejado" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
+                  <TextField editable="false" layoutX="79.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Q">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="324.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Distãncia Máxima (m)">
+                  <TextField editable="false" layoutX="109.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Q">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="15.0" layoutY="358.0" prefHeight="25.0" prefWidth="45.0" promptText="0000" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
+                  <TextField editable="false" layoutX="142.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="394.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Dia da Semana">
+                  <TextField editable="false" layoutX="174.0" layoutY="238.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="16.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
+                  <TextField editable="false" layoutX="15.0" layoutY="280.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Horário">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="48.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="T">
+                  <TextField layoutX="15.0" layoutY="312.0" prefHeight="25.0" prefWidth="45.0" promptText="00:00" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="79.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Q">
+                  <TextField layoutX="69.0" layoutY="312.0" prefHeight="25.0" prefWidth="45.0" promptText="00:00" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
                      <font>
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <TextField editable="false" layoutX="109.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Q">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField editable="false" layoutX="142.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField editable="false" layoutX="174.0" layoutY="426.0" prefHeight="23.0" prefWidth="25.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="S">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField editable="false" layoutX="15.0" layoutY="467.0" prefHeight="23.0" prefWidth="132.0" style="-fx-text-fill: white; -fx-background-radius: 20; -fx-background-color: #707ceb;" text="Horário">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField layoutX="15.0" layoutY="499.0" prefHeight="25.0" prefWidth="45.0" promptText="00:00" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <TextField layoutX="69.0" layoutY="499.0" prefHeight="25.0" prefWidth="45.0" promptText="00:00" style="-fx-background-radius: 20; -fx-background-color: #2e50c4; -fx-prompt-text-fill: white;">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </TextField>
-                  <Button layoutX="17.0" layoutY="542.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #4f66d8; -fx-text-fill: white; -fx-border-radius: 5; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button layoutX="118.0" layoutY="542.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #0d3ab0; -fx-text-fill: white; -fx-background-radius: 5;" text="Salvar" />
+                  <Button layoutX="17.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #4f66d8; -fx-text-fill: white; -fx-border-radius: 5; -fx-background-radius: 5;" text="Cancelar" />
+                  <Button layoutX="118.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #0d3ab0; -fx-text-fill: white; -fx-background-radius: 5;" text="Salvar" />
                </children>
             </Pane>
          </content>
