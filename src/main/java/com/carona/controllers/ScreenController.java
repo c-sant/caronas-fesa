@@ -1,6 +1,7 @@
 package com.carona.controllers;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -174,23 +175,6 @@ public class ScreenController {
 
     @FXML
     private void onClickHome() throws IOException, SQLException, BlankFieldsException, EntityAlreadyExistsException {
-    //     PostService postService = new PostService();
-    //     postService.create(
-    //         new PostModel(
-    //                 -1,
-    //                 App.getUser(), 
-    //                 "Título do post teste", 
-    //                 "Descrição do post teste", 
-    //                 new LocationModel(-1, 10.0, 10.0),
-    //                 new LocationModel(-1, 10.00001, 10.00001),
-    //                 new AvailableWeekdaysModel(-1, true, true, true, true, true, true, true), 
-    //                 2,
-    //                 LocalTime.now(), LocalDateTime.now()
-    //             )
-    //         );
-
-    //     setDafaultFilters();
-    // private void onClickHome() throws IOException {
         setDefaultFilters();
         reloadPosts();
         setNotificationCount();
@@ -237,21 +221,33 @@ public class ScreenController {
         }
     }
 
-    private PostFilter formatPostFilter() {
+    private PostFilter formatPostFilter() throws MalformedURLException, IOException {
+        PostService service = new PostService();
         AvailableWeekdaysModel availableWeekdaysModel = new AvailableWeekdaysModel(
             -1, chkDom.isSelected(), chkSeg.isSelected(), chkTer.isSelected(), chkQua.isSelected(), 
             chkQui.isSelected(), chkSex.isSelected(), chkSab.isSelected()
         );
 
-        LocationModel departure_place = new LocationModel(-1, 10.0, 10.001); // Preencher latitude e longitude conforme filtro feito
+        if(!txtLocale.getText().isEmpty()){
+            String response = service.getLatAndLon(txtLocale.getText());
+            LocationModel departure_place = new LocationModel(-1, Double.valueOf(response.split(",")[1]), Double.valueOf(response.split(",")[0])); // Preencher latitude e longitude conforme filtro feito
+            return new PostFilter(
+                    txtSearch.getText(),
+                    new AvailableWeekdaysFilter(availableWeekdaysModel),
+                    departure_place != null ? new LocationFilter(departure_place, Integer.parseInt(txtDistancia.getText())) : null
+            );
+        }
 
         return new PostFilter(
-                txtSearch.getText(),
-                new AvailableWeekdaysFilter(availableWeekdaysModel),
-                new LocationFilter(departure_place, Integer.parseInt(txtDistancia.getText()))
+                    txtSearch.getText(),
+                    new AvailableWeekdaysFilter(availableWeekdaysModel),
+                    null
         );
+
+        
     }
 
+   
     private List<PostModel> getPosts() throws IOException {
         try {
             PostFilter postFilter = formatPostFilter();

@@ -68,7 +68,7 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <Button id="cancelExclude" fx:id="btnCancel" layoutX="16.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Cancelar" />
+                  <Button id="cancelExclude" fx:id="btnCancel" layoutX="16.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Cancelar" onAction="#onCancel" />
                   <Button id="Register" fx:id="btnCreatePost" layoutX="127.0" layoutY="482.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Publicar" onAction="#onCreatePost"/>
                   <TextField fx:id="txtArriveLocation" layoutX="13.0" layoutY="130.0" prefHeight="25.0" prefWidth="206.0" promptText="Local de Destino ">
                      <font>

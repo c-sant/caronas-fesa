@@ -1,6 +1,7 @@
 package com.carona.controllers;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Optional;
 
 import com.carona.App;
 import com.carona.exceptions.BlankFieldsException;
+import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.InvalidSelectionDaysException;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.LocationModel;
@@ -98,43 +100,60 @@ public class PostController {
    }
     
     @FXML
-    private void onCreatePost() throws IOException, BlankFieldsException, InvalidSelectionDaysException {
+    private void onCreatePost() throws IOException, BlankFieldsException, InvalidSelectionDaysException, EntityAlreadyExistsException, SQLException {
         Boolean hasError = false;
         String message = "";
-        // try{
-        //     verifyFields();
-        // }catch(BlankFieldsException err){
-        //     hasError = true;
-        //     message = "Ainda existe campos obrigatórios não preenchidos";
-        // }catch(InvalidSelectionDaysException err){
-        //     hasError = true;
-        //     message = "Pelo menos um dia deve ser selecionado";
-        // }
+        try{
+            verifyFields();
+        }catch(BlankFieldsException err){
+            hasError = true;
+            message = "Ainda existe campos obrigatórios não preenchidos";
+        }catch(InvalidSelectionDaysException err){
+            hasError = true;
+            message = "Pelo menos um dia deve ser selecionado";
+        }
 
-        // if (hasError) {
-        //     createAlert(hasError, message);
-        //     return;
-        // }
+        if (hasError) {
+            createAlert(hasError, message);
+            return;
+        }
         
-        // PostModel model = new PostModel(
-        //         -1, 
-        //         App.getUser(),
-        //         txtTitle.getText(), 
-        //         txtDescription.getText(), 
-        //         new LocationModel(-1, 10.1, 20.2),
-        //         new LocationModel(-1, 30.3, 40.3),
-        //         new AvailableWeekdaysModel(-1,false, checkDaysMap.get("chkMonday"), checkDaysMap.get("chkTuesday"), checkDaysMap.get("chkWednesday"), 
-        //         checkDaysMap.get("chkThursday"), checkDaysMap.get("chkFriday"), checkDaysMap.get("chkSaturday")),
-        //         Integer.valueOf(txtNumbersOfPeople.getText()), 
-        //         LocalTime.parse(txtDepartureHour.getText()),
-        //         LocalDateTime.now()
-        //     );
-
         PostService service = new PostService();
-        service.requestLatAndLon();
-        // service.create(model);
+        String response1 = service.getLatAndLon(txtDepartureLocation.getText());
+        String response2 = service.getLatAndLon(txtArriveLocation.getText());
+        System.out.println(response1);
+        System.out.println(response2);
+        String lon1 = response1.split(",")[0];
+        String lat1 = response1.split(",")[1];
+        
+        String lon2 = response2.split(",")[0];
+        String lat2 = response2.split(",")[1];
+        PostModel model = new PostModel(
+                -1, 
+                App.getUser(),
+                txtTitle.getText(), 
+                txtDescription.getText(), 
+                new LocationModel(-1, Double.valueOf(lat1), Double.valueOf(lon1)),
+                new LocationModel(-1,Double.valueOf(lat2), Double.valueOf(lon2)),
+                new AvailableWeekdaysModel(-1,false, checkDaysMap.get("chkMonday"), checkDaysMap.get("chkTuesday"), checkDaysMap.get("chkWednesday"), 
+                checkDaysMap.get("chkThursday"), checkDaysMap.get("chkFriday"), checkDaysMap.get("chkSaturday")),
+                Integer.valueOf(txtNumbersOfPeople.getText()), 
+                LocalTime.parse(txtDepartureHour.getText()),
+                LocalDateTime.now()
+            );
+
+       
+        service.create(model);
+        createAlert(hasError, "Criado com Sucesso");
+        App.setRoot("mainScreen");
+        
     }
 
+
+    @FXML void onCancel() throws IOException{
+        App.setRoot("mainScreen");
+    }
+    
     private Boolean verifyFields() throws BlankFieldsException, InvalidSelectionDaysException{
         verifyFieldsIsEmpty();
         verifyDaysSelected();

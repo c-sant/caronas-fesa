@@ -1,10 +1,18 @@
 package com.carona.services;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.carona.DAO.NotificationDAO;
 import com.carona.DAO.PostDAO;
@@ -93,7 +101,28 @@ public class PostService {
         return postDAO.readByAdvancedFilter(postFilter);
     }
 
-    public void requestLatAndLon() throws MalformedURLException, IOException, UnsupportedEncodingException{
+    public String getLatAndLon(String parameter) throws MalformedURLException, IOException{
+        String encodedSearch = URLEncoder.encode(parameter, "utf-8");
+        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+ encodedSearch + "&apiKey=72153e202e824dc6afa201e03851dac8");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestProperty("Accept", "application/json");
+
+        InputStream is = http.getInputStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+        StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
+        String line;
+        while ((line = rd.readLine()) != null) {
+            response.append(line);
+            response.append('\r');
+        }
+        rd.close();
+
+        http.disconnect();
+        
+        Integer indexGeometry = response.toString().indexOf("coordinates");
+        Integer indexBbox = response.toString().indexOf("properties");
+        
+        return response.toString().substring(indexGeometry + 14, indexBbox - 4);
     }
 
    
