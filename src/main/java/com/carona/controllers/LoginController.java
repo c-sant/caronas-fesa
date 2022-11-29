@@ -3,6 +3,7 @@ package com.carona.controllers;
 import com.carona.App;
 import com.carona.models.UserModel;
 import com.carona.services.AuthService;
+import com.carona.services.NotificationConfigService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,6 +36,7 @@ public class LoginController {
     }
 
     AuthService authService = new AuthService();
+    NotificationConfigService notificationService = new NotificationConfigService();
 
     @FXML
     private void onLogin() throws Exception, IOException, SQLException {
@@ -45,6 +47,7 @@ public class LoginController {
 
         if (user != null) {
             App.setUser(user);
+            App.setNotificationConfig(notificationService.readByUserId());
             App.setRoot("mainScreen");
         } else {
             createAlert();

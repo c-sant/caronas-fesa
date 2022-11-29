@@ -1,5 +1,7 @@
 package com.carona.services;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,18 +11,19 @@ import com.carona.DAO.UserDAO;
 import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
+import com.carona.helpers.PostAndNotificationHelper;
 import com.carona.models.NotificationConfigModel;
 
 public class NotificationConfigService {
     NotificationConfigDAO notificationDAO = new NotificationConfigDAO();
+    PostAndNotificationHelper helper = new PostAndNotificationHelper();
     UserDAO userDAO = new UserDAO();
 
     public void create(NotificationConfigModel notification) throws BlankFieldsException, EntityAlreadyExistsException, EntityDoesNotExistException, SQLException {
         Boolean notificationExists = notificationDAO.readById(notification) != null;
 
         if (notificationExists) {
-            update(notification);
-            // throw new EntityAlreadyExistsException("Notification já existe com id " + notification.getId()); 
+            throw new EntityAlreadyExistsException("Notification já existe com id " + notification.getId()); 
         }
         validateNotification(notification);
 
@@ -31,8 +34,7 @@ public class NotificationConfigService {
 
         Boolean userAlreadyHasNotificationConfig = notificationDAO.notificationConfigExistsForUser(notification.getUserModel());
         if (userAlreadyHasNotificationConfig) {
-            update(notification);
-            // throw new EntityAlreadyExistsException("Usuário com id = " + notification.getUserModel().getId() + " já possui NotificationConfig"); 
+            throw new EntityAlreadyExistsException("Usuário com id = " + notification.getUserModel().getId() + " já possui NotificationConfig"); 
         }
 
         notificationDAO.insert(notification);
@@ -74,6 +76,7 @@ public class NotificationConfigService {
         NotificationConfigModel model = notificationDAO.getNotificationConfigByUser(App.getUser());
         return model;
     }
+    
     private void validateNotification(NotificationConfigModel notification) throws BlankFieldsException {
         if (notification.getUserModel() == null) {
             throw new BlankFieldsException("Usuário de configuração não especificado.");
@@ -102,5 +105,9 @@ public class NotificationConfigService {
         if (notification.getPlaceOfDeparture() == null) {
             throw new BlankFieldsException("Local de partida não especificado.");
         }
+    }
+
+    public String getCity(String lat, String lon) throws MalformedURLException, IOException{
+        return helper.requestGetCity(lat, lon);
     }
 }

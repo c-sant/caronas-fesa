@@ -94,5 +94,14 @@
             </Text>
          </children>
       </Pane>
+      <Pane id="disable" fx:id="paneLoading" disable="true" layoutX="-62.0" prefHeight="507.0" prefWidth="412.0">
+         <children>
+            <ImageView fitHeight="104.0" fitWidth="89.0" layoutX="168.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/loading.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </Pane>

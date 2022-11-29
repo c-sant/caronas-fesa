@@ -95,8 +95,8 @@ public class NotificationConfigDAO implements GenericDAO<NotificationConfigModel
 
             conn = Connector.getInstance();
 
-            locationDAO.update(model.getPlaceOfDeparture());
-            availableWeekdaysDAO.update(model.getAvailableWeekdays());
+            locationDAO.insert(model.getPlaceOfDeparture());
+            availableWeekdaysDAO.insert(model.getAvailableWeekdays());
 
             ps = conn.prepareStatement(UPDATE_SQL);
             

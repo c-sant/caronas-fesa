@@ -20,6 +20,7 @@ import com.carona.exceptions.EntityDoesNotExistException;
 import com.carona.models.AvailableWeekdaysModel;
 import com.carona.models.Course;
 import com.carona.models.LocationModel;
+import com.carona.models.NotificationConfigModel;
 import com.carona.models.PostModel;
 import com.carona.models.UserModel;
 import com.carona.services.PostService;
@@ -31,6 +32,15 @@ public class App extends Application {
 
     private static Scene scene;
     private static UserModel user;
+    private static NotificationConfigModel model;
+
+    public static NotificationConfigModel getNotificationConfig(){
+        return model;
+    }
+
+    public static void setNotificationConfig(NotificationConfigModel notificationConfig){
+        model = notificationConfig;
+    }
 
     public static UserModel getUser() {
         return user;

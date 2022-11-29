@@ -20,11 +20,13 @@ import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
 import com.carona.filters.PostFilter;
+import com.carona.helpers.PostAndNotificationHelper;
 import com.carona.models.PostModel;
 
 public class PostService {
     PostDAO postDAO = new PostDAO();
     NotificationDAO notificationDAO = new NotificationDAO();
+    PostAndNotificationHelper helper = new PostAndNotificationHelper();
 
     public void create(PostModel post) throws BlankFieldsException, EntityAlreadyExistsException, SQLException {
         Boolean postExists = postDAO.readById(post) != null;
@@ -102,27 +104,7 @@ public class PostService {
     }
 
     public String getLatAndLon(String parameter) throws MalformedURLException, IOException{
-        String encodedSearch = URLEncoder.encode(parameter, "utf-8");
-        URL url = new URL("https://api.geoapify.com/v1/geocode/search?text="+ encodedSearch + "&lang=pt&limit=1&type=city&filter=countrycode:br&apiKey=72153e202e824dc6afa201e03851dac8");
-        HttpURLConnection http = (HttpURLConnection)url.openConnection();
-        http.setRequestProperty("Accept", "application/json");
-
-        InputStream is = http.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder(); // or StringBuffer if Java version 5+
-        String line;
-        while ((line = rd.readLine()) != null) {
-            response.append(line);
-            response.append('\r');
-        }
-        rd.close();
-
-        http.disconnect();
-        
-        Integer indexGeometry = response.toString().indexOf("coordinates");
-        Integer indexBbox = response.toString().indexOf("bbox");
-        
-        return response.toString().substring(indexGeometry + 14, indexBbox - 4);
+        return helper.requestGetLatAndLon(parameter);
     }
 
    

@@ -22,6 +22,7 @@ import com.carona.services.PostService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 public class SettingsNotificationController {
     
@@ -69,17 +70,17 @@ public class SettingsNotificationController {
     TextField chkNo;
 
     Map<String, Boolean> checkDaysMap = new HashMap<String, Boolean>();
+    NotificationConfigModel model = App.getNotificationConfig();
     NotificationConfigService notificationService = new NotificationConfigService();
-    NotificationConfigModel model = new NotificationConfigModel();
 
     @FXML
     public void initialize() throws IOException, MalformedURLException, BlankFieldsException, EntityAlreadyExistsException, EntityDoesNotExistException, SQLException {
-        checkDaysMap.put("chkMonday"   , false);
-        checkDaysMap.put("chkTuesday"  , false);
-        checkDaysMap.put("chkWednesday", false);
-        checkDaysMap.put("chkThursday" , false);
-        checkDaysMap.put("chkFriday"   , false);
-        checkDaysMap.put("chkSaturday" , false);
+        checkDaysMap.put("chkMonday"   , model.getAvailableWeekdays().getMonday());
+        checkDaysMap.put("chkTuesday"  , model.getAvailableWeekdays().getTuesday());
+        checkDaysMap.put("chkWednesday", model.getAvailableWeekdays().getWednesday());
+        checkDaysMap.put("chkThursday" , model.getAvailableWeekdays().getThursday());
+        checkDaysMap.put("chkFriday"   , model.getAvailableWeekdays().getFriday());
+        checkDaysMap.put("chkSaturday" , model.getAvailableWeekdays().getSaturday());
         checkDaysMap.put("chkYes" , false);
         checkDaysMap.put("chkNo" , false);
         chkMonday.setOnMouseClicked(event -> selectedOrUnselected((TextField) event.getSource()));
@@ -90,22 +91,28 @@ public class SettingsNotificationController {
         chkSaturday.setOnMouseClicked(event -> selectedOrUnselected((TextField) event.getSource()));
         chkYes.setOnMouseClicked(event -> selectedOrUnselected((TextField) event.getSource()));
         chkNo.setOnMouseClicked(event -> selectedOrUnselected((TextField) event.getSource()));
-        model = notificationService.readByUserId();
         loadInformation();
-        
     }
 
-    private void loadInformation(){
+    private void loadInformation() throws MalformedURLException, IOException{
         if(model != null){
-            // txtLocale.setText(model.getPlaceOfDeparture());
+            String lat = String.valueOf(model.getPlaceOfDeparture().getLatitude());
+            String lon = String.valueOf(model.getPlaceOfDeparture().getLongitude());
+            txtLocale.setText(notificationService.getCity(lat, lon));
             txtDistance.setText(String.valueOf(model.getMaxDistanceInKm()));
             txtIntervalEnd.setText(String.valueOf(model.getFinalDepartureTime()));
             txtIntervalInitial.setText(String.valueOf(model.getInitialDepartureTime()));
-            // if(model.getReceiveNotification().equals(true)){
-            //     ((TextField) App.getNode("#chkYes")).getStyleClass().add("selected");
-            // }else{
-            //     ((TextField) App.getNode("#chkNo")).getStyleClass().add("selected");
-            // }
+            if(model.getReceiveNotification().equals(true)){
+                chkYes.getStyleClass().add("selected");
+            }else{
+                chkNo.getStyleClass().add("selected");
+            }
+            if(checkDaysMap.get("chkMonday").equals(true))    chkMonday.getStyleClass().add("selected");
+            if(checkDaysMap.get("chkTuesday").equals(true))   chkTuesday.getStyleClass().add("selected");
+            if(checkDaysMap.get("chkWednesday").equals(true)) chkWednesday.getStyleClass().add("selected");
+            if(checkDaysMap.get("chkThursday").equals(true))  chkThursday.getStyleClass().add("selected");
+            if(checkDaysMap.get("chkFriday").equals(true))    chkFriday.getStyleClass().add("selected");
+            if(checkDaysMap.get("chkSaturday").equals(true))  chkSaturday.getStyleClass().add("selected");
         }
     }
 
@@ -143,7 +150,7 @@ public class SettingsNotificationController {
         LocationModel departure_place = new LocationModel(-1, Double.valueOf(response.split(",")[1]), Double.valueOf(response.split(",")[0])); // Preencher latitude e longitude conforme filtro feito
         
         NotificationConfigModel notification = 
-        new NotificationConfigModel(model != null ? model.getId() : -1, 
+        new NotificationConfigModel(model.getId(), 
         App.getUser(), 
         checkDaysMap.get("chkYes").equals(true) ? true : false, 
         departure_place, 
@@ -152,7 +159,8 @@ public class SettingsNotificationController {
         LocalTime.parse(txtIntervalInitial.getText()) , 
         LocalTime.parse(txtIntervalEnd.getText()));
 
-        notificationService.create(notification);
+        notificationService.update(notification);
+        App.setNotificationConfig(notification);
         
     }
 }

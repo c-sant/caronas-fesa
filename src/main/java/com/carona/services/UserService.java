@@ -1,12 +1,18 @@
 package com.carona.services;
 
 import java.sql.SQLException;
+import java.time.LocalTime;
 
+import com.carona.DAO.AvailableWeekdaysDAO;
 import com.carona.DAO.UserDAO;
+import com.carona.exceptions.BlankFieldsException;
 import com.carona.exceptions.EntityAlreadyExistsException;
 import com.carona.exceptions.EntityDoesNotExistException;
 import com.carona.exceptions.InvalidPasswordComplexityException;
 import com.carona.helpers.AuthHelper;
+import com.carona.models.AvailableWeekdaysModel;
+import com.carona.models.LocationModel;
+import com.carona.models.NotificationConfigModel;
 import com.carona.models.UserModel;
 
 public class UserService {
@@ -28,6 +34,24 @@ public class UserService {
 
         user.setPassword(AuthHelper.encryptPassword(password));
         userDAO.insert(user);
+        createNotificationDefault(user);
+    }
+
+    public void createNotificationDefault(UserModel user) throws BlankFieldsException, EntityAlreadyExistsException, EntityDoesNotExistException, SQLException{
+        NotificationConfigService service = new NotificationConfigService();
+        
+        service.create(
+            new NotificationConfigModel(
+                -1,
+                user,
+              false, 
+              new LocationModel(-1, -23.681347, -46.620520), 
+              10.0, 
+              new AvailableWeekdaysModel(-1, false, false, false, false, false, false, false), 
+              LocalTime.parse("18:00"), 
+              LocalTime.parse("19:00")));
+
+            
     }
 
     public UserModel readById(String id) throws Exception, SQLException {
