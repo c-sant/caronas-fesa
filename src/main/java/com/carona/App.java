@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -102,7 +103,9 @@ public class App extends Application {
 
         // //service.remove(newModel);
         // System.out.println("Após deletado = " + service.readById(newId));
-
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("imgs/car.png")));
+        stage.setTitle("Bifrost - Carona");
+       
 
         scene = new Scene(loadFXML("loginScreen"), 300, 500);
         stage.setResizable(false);
