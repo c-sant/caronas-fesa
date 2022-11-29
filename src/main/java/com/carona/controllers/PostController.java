@@ -121,8 +121,6 @@ public class PostController {
         PostService service = new PostService();
         String response1 = service.getLatAndLon(txtDepartureLocation.getText());
         String response2 = service.getLatAndLon(txtArriveLocation.getText());
-        System.out.println(response1);
-        System.out.println(response2);
         String lon1 = response1.split(",")[0];
         String lat1 = response1.split(",")[1];
         
