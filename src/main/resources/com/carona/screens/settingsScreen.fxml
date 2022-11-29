@@ -94,8 +94,8 @@
                         <Font name="Arial" size="12.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="btnCancel" layoutX="17.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #4f66d8; -fx-text-fill: white; -fx-border-radius: 5; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button fx:id="btnOnSave" layoutX="118.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #0d3ab0; -fx-text-fill: white; -fx-background-radius: 5;" text="Salvar" />
+                  <Button fx:id="btnCancel" layoutX="17.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #4f66d8; -fx-text-fill: white; -fx-border-radius: 5; -fx-background-radius: 5;" styleClass="pointer" text="Cancelar" />
+                  <Button fx:id="btnOnSave" layoutX="118.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #0d3ab0; -fx-text-fill: white; -fx-background-radius: 5;" styleClass="pointer" text="Salvar" />
                </children>
                <stylesheets>
                   <URL value="@../styles/stylePost.css" />

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import com.carona.App;
 import com.carona.exceptions.BlankFieldsException;
@@ -20,8 +21,11 @@ import com.carona.services.NotificationService;
 import com.carona.services.PostService;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.Pane;
 
 public class SettingsNotificationController {
@@ -161,6 +165,16 @@ public class SettingsNotificationController {
 
         notificationService.update(notification);
         App.setNotificationConfig(notification);
+
+        createAlert(false, "");
         
+    }
+
+    private void createAlert(Boolean hasError, String message) throws IOException {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Mensagem");
+        alert.setHeaderText("Status de Alteração de Configurações");
+        alert.setContentText(!hasError ? "Alterado com Sucesso" : message);
+        Optional<ButtonType> result = alert.showAndWait();
     }
 }
