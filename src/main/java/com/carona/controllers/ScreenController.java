@@ -141,7 +141,6 @@ public class ScreenController{
         setNotificationCount();
         setDefaultFilters();
         reloadPosts();
-        // paneHeader.getChildren().add(App.loadFXML("mainHeaderScreen"));
     }
 
     private void setNotificationCount() {

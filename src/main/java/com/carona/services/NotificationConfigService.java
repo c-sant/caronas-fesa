@@ -3,6 +3,7 @@ package com.carona.services;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.carona.App;
 import com.carona.DAO.NotificationConfigDAO;
 import com.carona.DAO.UserDAO;
 import com.carona.exceptions.BlankFieldsException;
@@ -18,7 +19,8 @@ public class NotificationConfigService {
         Boolean notificationExists = notificationDAO.readById(notification) != null;
 
         if (notificationExists) {
-            throw new EntityAlreadyExistsException("Notification já existe com id " + notification.getId()); 
+            update(notification);
+            // throw new EntityAlreadyExistsException("Notification já existe com id " + notification.getId()); 
         }
         validateNotification(notification);
 
@@ -29,7 +31,8 @@ public class NotificationConfigService {
 
         Boolean userAlreadyHasNotificationConfig = notificationDAO.notificationConfigExistsForUser(notification.getUserModel());
         if (userAlreadyHasNotificationConfig) {
-            throw new EntityAlreadyExistsException("Usuário com id = " + notification.getUserModel().getId() + " já possui NotificationConfig"); 
+            update(notification);
+            // throw new EntityAlreadyExistsException("Usuário com id = " + notification.getUserModel().getId() + " já possui NotificationConfig"); 
         }
 
         notificationDAO.insert(notification);
@@ -67,6 +70,10 @@ public class NotificationConfigService {
         return notificationsFound;
     }
 
+    public NotificationConfigModel readByUserId() throws SQLException{
+        NotificationConfigModel model = notificationDAO.getNotificationConfigByUser(App.getUser());
+        return model;
+    }
     private void validateNotification(NotificationConfigModel notification) throws BlankFieldsException {
         if (notification.getUserModel() == null) {
             throw new BlankFieldsException("Usuário de configuração não especificado.");

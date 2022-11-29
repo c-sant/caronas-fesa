@@ -230,6 +230,33 @@ public class NotificationConfigDAO implements GenericDAO<NotificationConfigModel
         }
     }
 
+
+    public NotificationConfigModel getNotificationConfigByUser(UserModel user) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = Connector.getInstance();
+            ps = conn.prepareStatement("SELECT * FROM [NotificationConfig] WHERE user_id = ?");
+
+            ps.setString(1, user.getId());
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return convertToModel(rs);
+            }
+
+            return null;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
     protected NotificationConfigModel convertToModel(ResultSet rs) throws SQLException {
         LocationModel placeOfDeparture = locationDAO.readById(new LocationModel(rs.getInt("place_of_departure")));
         AvailableWeekdaysModel availableWeekdays = availableWeekdaysDAO.readById(new AvailableWeekdaysModel(rs.getInt("available_weekdays")));
